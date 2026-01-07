@@ -8,12 +8,13 @@ USE funontrip_db;
 -- =====================================================
 -- 1) Usuarios (tabla padre)
 -- =====================================================
-INSERT INTO Usuarios (nombre, correo_electronico, contraseña, rol, fecha_registro) VALUES
-('Angie Torres', 'anguietorres.92@gmail.com', '$2b$10$Fun2024AngieHash', 'admin', '2025-12-01 10:00:00'),
-('Danae Rojas', 'danaero25@gmail.com', '$2b$10$Fun2024DanaeHash', 'admin', '2025-12-02 11:30:00'),
-('David Carranco', 'david_carranco1111@outlook.es', '$2b$10$Fun2024DavidHash', 'admin', '2025-12-03 09:15:00'),
-('Jared Barranco', 'barrancojared577@gmail.com', '$2b$10$Fun2024JaredHash', 'admin', '2025-12-04 18:45:00'),
-('Fernando Ortiz', 'jorfernandofo@gmail.com', '$2b$10$Fun2024FerHash', 'admin', '2025-12-05 14:20:00');
+INSERT INTO Usuarios (nombre, correo_electronico, contraseña, telefono, rol, fecha_registro) VALUES
+('Angie Torres', 'anguietorres.92@gmail.com', '$2b$10$Fun2024AngieHash', '5551110001', 'admin', '2025-12-01 10:00:00'),
+('Danae Rojas', 'danaero25@gmail.com', '$2b$10$Fun2024DanaeHash', '5551110002', 'admin', '2025-12-02 11:30:00'),
+('David Carranco', 'david_carranco1111@outlook.es', '$2b$10$Fun2024DavidHash', '5551110003', 'admin', '2025-12-03 09:15:00'),
+('Jared Barranco', 'barrancojared577@gmail.com', '$2b$10$Fun2024JaredHash', '5551110004', 'admin', '2025-12-04 18:45:00'),
+('Fernando Ochoa', 'jorfernandofo@gmail.com', '$2b$10$Fun2024FerHash', '5551110005', 'admin', '2025-12-05 14:20:00');
+
 
 -- =====================================================
 -- 2) Productos

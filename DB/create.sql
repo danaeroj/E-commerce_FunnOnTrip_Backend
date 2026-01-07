@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS Usuarios (
   nombre VARCHAR(100) NOT NULL COMMENT 'Nombre completo del usuario',
   correo_electronico VARCHAR(100) NOT NULL COMMENT 'Email único del usuario',
   contraseña VARCHAR(255) NOT NULL COMMENT 'Password hasheado (bcrypt)',
+  telefono VARCHAR(20) NULL DEFAULT NULL COMMENT 'Teléfono del usuario',
   rol ENUM('user','admin') NOT NULL DEFAULT 'user' COMMENT 'Tipo de usuario',
   fecha_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creación de cuenta',
   PRIMARY KEY (idUsuarios),
@@ -31,6 +32,7 @@ CREATE TABLE IF NOT EXISTS Usuarios (
   DEFAULT CHARSET=utf8mb4
   COLLATE=utf8mb4_unicode_ci
   COMMENT='Almacena información de usuarios del sistema';
+
 
 -- -----------------------------------------------------
 -- Tabla: Producto
