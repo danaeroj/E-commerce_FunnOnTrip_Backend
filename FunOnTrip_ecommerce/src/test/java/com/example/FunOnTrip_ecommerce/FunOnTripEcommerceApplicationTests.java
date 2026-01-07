@@ -1,10 +1,10 @@
-package ecommerce.backend;
+package com.example.FunOnTrip_ecommerce;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ECommerceFunOnTripApplicationTests {
+class FunOnTripEcommerceApplicationTests {
 
 	@Test
 	void contextLoads() {
