@@ -1,7 +1,6 @@
 package FunOnTrip.ecommerce.controller;
 
 
-import FunOnTrip.ecommerce.model.DetallePedido;
 import FunOnTrip.ecommerce.model.Pedido;
 import FunOnTrip.ecommerce.service.PedidoService;
 import org.springframework.http.ResponseEntity;

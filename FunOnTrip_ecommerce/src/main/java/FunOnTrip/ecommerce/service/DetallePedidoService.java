@@ -1,12 +1,10 @@
 package FunOnTrip.ecommerce.service;
 
-package org.generation.ecommerce.service;
-
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import FunOnTrip.ecommerce.model.DetallePedido;
 import FunOnTrip.ecommerce.model.Pedido;
-import FunOnTrip.ecommerce.model.Producto;
 import FunOnTrip.ecommerce.repository.DetallePedidoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,10 +49,9 @@ public class DetallePedidoService {
      *
      * Conexiones:
      * - setPedido(pedido) conecta con la FK Detalle_pedidos.Pedidos_idPedidos.
-     * - setProducto(producto) conecta con la FK Detalle_pedidos.Producto_idProducto.
+     * - setProductoId(productoId) conecta con la FK Detalle_pedidos.Producto_idProducto (sin depender de Producto.java).
      *
-     * Nota: en un e-commerce real, normalmente los detalles se crean dentro del flujo de "crearPedido".
-     * Se expone aquí por requerimiento de CRUD completo.
+     * El precio unitario se obtiene directamente desde la tabla Producto con SQL nativo.
      */
     @Transactional
     public DetallePedido create(Integer pedidoId, Integer productoId, Integer cantidad) {
@@ -71,22 +68,54 @@ public class DetallePedidoService {
             throw new ResponseStatusException(BAD_REQUEST, "El pedido no existe: " + pedidoId);
         }
 
-        Producto producto = entityManager.find(Producto.class, productoId);
-        if (producto == null) {
-            throw new ResponseStatusException(BAD_REQUEST, "El producto no existe: " + productoId);
-        }
+        BigDecimal precioUnitario = obtenerPrecioProducto(productoId)
+                .setScale(2, RoundingMode.HALF_UP);
 
-        BigDecimal precioUnitario = producto.getPrecio().setScale(2, RoundingMode.HALF_UP);
-        BigDecimal subtotal = precioUnitario.multiply(new BigDecimal(cantidad)).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal subtotal = precioUnitario
+                .multiply(BigDecimal.valueOf(cantidad))
+                .setScale(2, RoundingMode.HALF_UP);
 
         DetallePedido detalle = new DetallePedido();
         detalle.setPedido(pedido);
-        detalle.setProducto(producto);
+
+        // IMPORTANTE: tu entidad DetallePedido debe tener este setter.
+        detalle.setProductoId(productoId);
+
         detalle.setCantidad(cantidad);
         detalle.setPrecioUnitario(precioUnitario);
         detalle.setSubtotal(subtotal);
 
         return detallePedidoRepository.save(detalle);
+    }
+
+    /**
+     * Obtiene el precio (DECIMAL) desde la tabla Producto sin usar la entidad Producto.
+     * Esto evita depender del modelo de tu compañera y evita el error de Double.setScale().
+     */
+    private BigDecimal obtenerPrecioProducto(Integer productoId) {
+        try {
+            Object result = entityManager.createNativeQuery(
+                            "SELECT precio FROM Producto WHERE idProducto = :id")
+                    .setParameter("id", productoId)
+                    .getSingleResult();
+
+            if (result == null) {
+                throw new ResponseStatusException(BAD_REQUEST, "El producto no existe: " + productoId);
+            }
+
+            if (result instanceof BigDecimal bd) {
+                return bd;
+            }
+            if (result instanceof Number n) {
+                return BigDecimal.valueOf(n.doubleValue());
+            }
+
+            throw new ResponseStatusException(INTERNAL_SERVER_ERROR,
+                    "Tipo de dato inesperado para precio en Producto: " + result.getClass().getName());
+
+        } catch (NoResultException e) {
+            throw new ResponseStatusException(BAD_REQUEST, "El producto no existe: " + productoId);
+        }
     }
 
     @Transactional
@@ -98,7 +127,9 @@ public class DetallePedidoService {
         DetallePedido detalle = getById(detalleId);
 
         BigDecimal precioUnitario = detalle.getPrecioUnitario().setScale(2, RoundingMode.HALF_UP);
-        BigDecimal subtotal = precioUnitario.multiply(new BigDecimal(nuevaCantidad)).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal subtotal = precioUnitario
+                .multiply(BigDecimal.valueOf(nuevaCantidad))
+                .setScale(2, RoundingMode.HALF_UP);
 
         detalle.setCantidad(nuevaCantidad);
         detalle.setSubtotal(subtotal);
