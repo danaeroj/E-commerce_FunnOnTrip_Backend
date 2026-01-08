@@ -1,5 +1,5 @@
 package FunOnTrip.ecommerce.repository;
 
-public class DetalleCarritoRepository {
+public interface DetalleCarritoRepository {
 
 }
