@@ -1,6 +1,5 @@
 package FunOnTrip.ecommerce.model;
 
-
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -8,66 +7,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Entidad JPA: Pedido
- *
- * Mapea la tabla "Pedidos" (plural en BD) a la clase "Pedido" (singular en Java).
+ * Entidad: Pedido
+ * Mapea la tabla "Pedidos".
  *
  * Conexiones:
- * - Se conecta con Usuario mediante la FK "Usuarios_idUsuarios" (ManyToOne).
- * - Se conecta con DetallePedido mediante OneToMany (un pedido tiene muchos detalles).
- *
- * Campos monetarios:
- * - subtotal, impuestos y total usan DECIMAL(10,2) en BD, por eso aquí usamos BigDecimal.
+ * - Se conecta con Usuario solo por el ID (Usuarios_idUsuarios) mientras Usuario.java no exista.
+ * - Se conecta con DetallePedido con OneToMany.
  */
 @Entity
 @Table(name = "Pedidos")
 public class Pedido {
 
-    /**
-     * PK de la tabla Pedidos: idPedidos (AUTO_INCREMENT).
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idPedidos")
     private Integer id;
 
     /**
-     * Relación ManyToOne con Usuario.
-     * Aquí se conecta con la tabla Usuarios usando la FK "Usuarios_idUsuarios".
+     * FK hacia Usuarios. Por ahora se maneja como Integer para no depender de Usuario.java.
      */
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "Usuarios_idUsuarios", nullable = false)
-    private Usuario usuario;
-
-    /**
-     * Columna FK expuesta solo para lectura (útil para responder JSON sin cargar Usuario).
-     * No se inserta/actualiza directamente porque la FK la maneja la relación "usuario".
-     */
-    @Column(name = "Usuarios_idUsuarios", insertable = false, updatable = false)
+    @Column(name = "Usuarios_idUsuarios", nullable = false)
     private Integer usuarioId;
 
-    /**
-     * Relación OneToMany con DetallePedido.
-     * mappedBy = "pedido" indica que la FK vive en Detalle_pedidos.Pedidos_idPedidos.
-     *
-     * cascade = ALL y orphanRemoval = true permiten persistir/borrar detalles junto con el pedido.
-     */
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetallePedido> detalles = new ArrayList<>();
 
     @Column(name = "subtotal", precision = 10, scale = 2, nullable = false)
-    private BigDecimal subtotal;
+    private BigDecimal subtotal = BigDecimal.ZERO;
 
     @Column(name = "impuestos", precision = 10, scale = 2, nullable = false)
-    private BigDecimal impuestos;
+    private BigDecimal impuestos = BigDecimal.ZERO;
 
     @Column(name = "total", precision = 10, scale = 2, nullable = false)
-    private BigDecimal total;
+    private BigDecimal total = BigDecimal.ZERO;
 
-    /**
-     * BD usa ENUM('pendiente','pagado','procesando','enviado','completado','cancelado')
-     * Por eso el enum está en minúsculas: así @Enumerated(EnumType.STRING) guarda el mismo valor en BD.
-     */
     public enum Estado {
         pendiente,
         pagado,
@@ -84,118 +57,47 @@ public class Pedido {
     @Column(name = "metodo_pago", length = 50)
     private String metodoPago;
 
-    /**
-     * En BD: fecha_pedido DATETIME DEFAULT CURRENT_TIMESTAMP.
-     * Se deja insertable/updatable en false para que lo maneje la BD.
-     */
     @Column(name = "fecha_pedido", insertable = false, updatable = false)
     private LocalDateTime fechaPedido;
 
-    /**
-     * En BD: fecha_actualizacion DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP.
-     * Se deja insertable/updatable en false para que lo maneje la BD.
-     */
     @Column(name = "fecha_actualizacion", insertable = false, updatable = false)
     private LocalDateTime fechaActualizacion;
 
-    public Pedido() {
-    }
+    public Pedido() {}
 
-    /* =========================
-       Helpers de relación
-       ========================= */
-
-    /**
-     * Agrega un detalle al pedido y asegura la conexión bidireccional:
-     * - detalle.setPedido(this)
-     * Esto es clave para que JPA guarde correctamente la FK Pedidos_idPedidos en Detalle_pedidos.
-     */
     public void addDetalle(DetallePedido detalle) {
-        this.detalles.add(detalle);
+        detalles.add(detalle);
         detalle.setPedido(this);
     }
 
-    /**
-     * Elimina un detalle y asegura la desconexión bidireccional.
-     */
     public void removeDetalle(DetallePedido detalle) {
-        this.detalles.remove(detalle);
+        detalles.remove(detalle);
         detalle.setPedido(null);
     }
 
-    /* =========================
-       Getters / Setters
-       ========================= */
+    public Integer getId() { return id; }
 
-    public Integer getId() {
-        return id;
-    }
+    public Integer getUsuarioId() { return usuarioId; }
+    public void setUsuarioId(Integer usuarioId) { this.usuarioId = usuarioId; }
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
+    public List<DetallePedido> getDetalles() { return detalles; }
+    public void setDetalles(List<DetallePedido> detalles) { this.detalles = detalles; }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
+    public BigDecimal getSubtotal() { return subtotal; }
+    public void setSubtotal(BigDecimal subtotal) { this.subtotal = subtotal; }
 
-    public Integer getUsuarioId() {
-        return usuarioId;
-    }
+    public BigDecimal getImpuestos() { return impuestos; }
+    public void setImpuestos(BigDecimal impuestos) { this.impuestos = impuestos; }
 
-    public List<DetallePedido> getDetalles() {
-        return detalles;
-    }
+    public BigDecimal getTotal() { return total; }
+    public void setTotal(BigDecimal total) { this.total = total; }
 
-    public void setDetalles(List<DetallePedido> detalles) {
-        this.detalles = detalles;
-    }
+    public Estado getEstado() { return estado; }
+    public void setEstado(Estado estado) { this.estado = estado; }
 
-    public BigDecimal getSubtotal() {
-        return subtotal;
-    }
+    public String getMetodoPago() { return metodoPago; }
+    public void setMetodoPago(String metodoPago) { this.metodoPago = metodoPago; }
 
-    public void setSubtotal(BigDecimal subtotal) {
-        this.subtotal = subtotal;
-    }
-
-    public BigDecimal getImpuestos() {
-        return impuestos;
-    }
-
-    public void setImpuestos(BigDecimal impuestos) {
-        this.impuestos = impuestos;
-    }
-
-    public BigDecimal getTotal() {
-        return total;
-    }
-
-    public void setTotal(BigDecimal total) {
-        this.total = total;
-    }
-
-    public Estado getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
-
-    public String getMetodoPago() {
-        return metodoPago;
-    }
-
-    public void setMetodoPago(String metodoPago) {
-        this.metodoPago = metodoPago;
-    }
-
-    public LocalDateTime getFechaPedido() {
-        return fechaPedido;
-    }
-
-    public LocalDateTime getFechaActualizacion() {
-        return fechaActualizacion;
-    }
+    public LocalDateTime getFechaPedido() { return fechaPedido; }
+    public LocalDateTime getFechaActualizacion() { return fechaActualizacion; }
 }
