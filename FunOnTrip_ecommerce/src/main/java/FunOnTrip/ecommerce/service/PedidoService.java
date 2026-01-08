@@ -1,12 +1,7 @@
 package FunOnTrip.ecommerce.service;
 
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import FunOnTrip.ecommerce.model.DetallePedido;
 import FunOnTrip.ecommerce.model.Pedido;
-import FunOnTrip.ecommerce.model.Producto;
-import FunOnTrip.ecommerce.model.Usuario;
 import FunOnTrip.ecommerce.repository.PedidoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,11 +18,8 @@ public class PedidoService {
 
     private final PedidoRepository pedidoRepository;
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     /**
-     * IVA definido por tu BD como 16% (comentario en create.sql).
+     * IVA definido por tu BD como 16%.
      */
     private static final BigDecimal IVA = new BigDecimal("0.16");
 
@@ -58,16 +50,10 @@ public class PedidoService {
     }
 
     /**
-     * Flujo de creación de pedidos:
-     * - Valida usuario existente (FK Usuarios_idUsuarios).
-     * - Valida productos existentes (FK Producto_idProducto).
-     * - Calcula subtotal, impuestos y total.
-     * - Persiste Pedido y sus DetallePedido en una sola transacción.
+     * Crea un pedido con detalles.
      *
-     * Conexiones clave:
-     * - Pedido.setUsuario(usuario) conecta con Usuarios.
-     * - detalle.setProducto(producto) conecta con Producto.
-     * - pedido.addDetalle(detalle) conecta Pedido con DetallePedido y asegura la FK Pedidos_idPedidos.
+     * En esta versión el flujo no depende de entidades Usuario/Producto,
+     * solo usa usuarioId y productoId para no bloquear el avance del equipo.
      */
     @Transactional
     public Pedido crearPedido(Integer usuarioId, String metodoPago, List<ItemPedido> items) {
@@ -79,44 +65,34 @@ public class PedidoService {
             throw new ResponseStatusException(BAD_REQUEST, "El pedido debe incluir al menos 1 producto");
         }
 
-        Usuario usuario = entityManager.find(Usuario.class, usuarioId);
-        if (usuario == null) {
-            throw new ResponseStatusException(BAD_REQUEST, "El usuario no existe: " + usuarioId);
-        }
-
         Pedido pedido = new Pedido();
-        pedido.setUsuario(usuario);
+        pedido.setUsuarioId(usuarioId);
         pedido.setMetodoPago(metodoPago);
         pedido.setEstado(Pedido.Estado.pendiente);
 
         BigDecimal subtotal = BigDecimal.ZERO;
 
         for (ItemPedido item : items) {
-            if (item == null || item.productoId == null || item.cantidad == null) {
-                throw new ResponseStatusException(BAD_REQUEST, "Cada item requiere productoId y cantidad");
+            if (item == null || item.productoId == null || item.cantidad == null || item.precioUnitario == null) {
+                throw new ResponseStatusException(BAD_REQUEST, "Cada item requiere productoId, cantidad y precioUnitario");
             }
             if (item.cantidad <= 0) {
                 throw new ResponseStatusException(BAD_REQUEST, "La cantidad debe ser mayor a 0");
             }
 
-            Producto producto = entityManager.find(Producto.class, item.productoId);
-            if (producto == null) {
-                throw new ResponseStatusException(BAD_REQUEST, "El producto no existe: " + item.productoId);
-            }
-
-            BigDecimal precioUnitario = producto.getPrecio();
+            BigDecimal precioUnitario = item.precioUnitario.setScale(2, RoundingMode.HALF_UP);
             BigDecimal subtotalItem = precioUnitario
-                    .multiply(new BigDecimal(item.cantidad))
+                    .multiply(BigDecimal.valueOf(item.cantidad))
                     .setScale(2, RoundingMode.HALF_UP);
 
             DetallePedido detalle = new DetallePedido();
-            detalle.setProducto(producto);
+            // ESTE MÉTODO DEBE EXISTIR EN DetallePedido.java
+            detalle.setProductoId(item.productoId);
             detalle.setCantidad(item.cantidad);
-            detalle.setPrecioUnitario(precioUnitario.setScale(2, RoundingMode.HALF_UP));
+            detalle.setPrecioUnitario(precioUnitario);
             detalle.setSubtotal(subtotalItem);
 
             pedido.addDetalle(detalle);
-
             subtotal = subtotal.add(subtotalItem);
         }
 
@@ -159,18 +135,20 @@ public class PedidoService {
     }
 
     /**
-     * DTO interno (no archivo extra) para crear pedidos desde el Controller.
+     * DTO interno para recibir items del pedido.
+     * precioUnitario se usa temporalmente mientras Producto no esté integrado.
      */
     public static class ItemPedido {
         public Integer productoId;
         public Integer cantidad;
+        public BigDecimal precioUnitario;
 
-        public ItemPedido() {
-        }
+        public ItemPedido() {}
 
-        public ItemPedido(Integer productoId, Integer cantidad) {
+        public ItemPedido(Integer productoId, Integer cantidad, BigDecimal precioUnitario) {
             this.productoId = productoId;
             this.cantidad = cantidad;
+            this.precioUnitario = precioUnitario;
         }
     }
 }
