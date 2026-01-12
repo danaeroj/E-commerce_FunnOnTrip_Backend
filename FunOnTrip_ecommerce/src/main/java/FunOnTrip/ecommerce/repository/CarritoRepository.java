@@ -9,10 +9,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CarritoRepository extends JpaRepository<Carrito, Integer> {
-	
-	// Buscar el carrito activo de un usuario
-	Optional<Carrito> findByUsuarioIdAndEstado(Long usuarioId, EstadoCarrito estado);
-	
-	// Buscar todos los carritos de un usuario
-	Optional<Carrito> findByUsuarioId(Long usuarioId);
+
+	// Buscar carrito activo de un usuario
+	Optional<Carrito> findByUsuarioIdUsuariosAndEstado(Long usuarioId, EstadoCarrito estado);
+
+	// Buscar cualquier carrito de un usuario
+	Optional<Carrito> findByUsuarioIdUsuarios(Long usuarioId);
 }
