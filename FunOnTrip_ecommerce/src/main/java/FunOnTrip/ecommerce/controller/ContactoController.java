@@ -8,9 +8,9 @@ import jakarta.validation.Valid;
 import FunOnTrip.ecommerce.model.Contacto;
 import FunOnTrip.ecommerce.service.ContactoService;
 
-@RestController
-@RequestMapping("/api/contacto")
-@CrossOrigin
+// @RestController
+// @RequestMapping("/api/contacto")
+// @CrossOrigin
 public class ContactoController {
 
     private final ContactoService contactoService;
