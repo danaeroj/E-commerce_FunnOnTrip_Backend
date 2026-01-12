@@ -1,26 +1,17 @@
 package FunOnTrip.ecommerce.controller;
 
-
 import FunOnTrip.ecommerce.model.Pedido;
 import FunOnTrip.ecommerce.service.PedidoService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
-/**
- * API REST: Pedido
- *
- * Endpoints principales:
- * - POST /api/pedidos               crea pedido con detalles (flujo principal)
- * - GET  /api/pedidos/{id}          obtiene pedido (con detalles)
- * - GET  /api/pedidos               lista pedidos
- * - GET  /api/pedidos/usuario/{id}  lista pedidos por usuario
- * - PUT  /api/pedidos/{id}/estado   cambia estado (flujo de pedidos)
- * - DELETE /api/pedidos/{id}        elimina pedido
- */
 @RestController
 @RequestMapping("/api/pedidos")
+@CrossOrigin(origins = "*")
 public class PedidoController {
 
     private final PedidoService pedidoService;
@@ -45,28 +36,30 @@ public class PedidoController {
     }
 
     /**
-     * Crea un pedido con sus detalles.
-     *
-     * Request ejemplo:
+     * POST /api/pedidos
+     * Body ejemplo:
      * {
      *   "usuarioId": 1,
-     *   "metodoPago": "tarjeta",
+     *   "metodoPago": "cotizacion",
      *   "items": [
-     *     {"productoId": 2, "cantidad": 1},
-     *     {"productoId": 5, "cantidad": 3}
+     *     { "productoId": 1, "cantidad": 2 },
+     *     { "productoId": 2, "cantidad": 1 }
      *   ]
      * }
      */
     @PostMapping
-    public ResponseEntity<Pedido> create(@RequestBody CreatePedidoRequest request) {
+    public ResponseEntity<CreatePedidoResponse> create(@RequestBody CreatePedidoRequest request) {
         Pedido creado = pedidoService.crearPedido(request.usuarioId, request.metodoPago, request.items);
-        return ResponseEntity.ok(creado);
+
+        CreatePedidoResponse resp = new CreatePedidoResponse();
+        resp.pedidoId = creado.getIdPedidos();   // o creado.getId()
+        resp.estado = creado.getEstado();
+        resp.metodoPago = creado.getMetodoPago();
+        resp.total = creado.getTotal();
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 
-    /**
-     * Actualiza el estado del pedido.
-     * Ejemplo: PUT /api/pedidos/10/estado?estado=pagado
-     */
     @PutMapping("/{id}/estado")
     public Pedido updateEstado(@PathVariable Integer id, @RequestParam Pedido.Estado estado) {
         return pedidoService.actualizarEstado(id, estado);
@@ -83,15 +76,19 @@ public class PedidoController {
         return ResponseEntity.noContent().build();
     }
 
-    /**
-     * DTO interno para crear pedidos (evita crear archivos extra).
-     */
+    // ========= DTOs internos =========
+
     public static class CreatePedidoRequest {
         public Integer usuarioId;
         public String metodoPago;
         public List<PedidoService.ItemPedido> items;
-
         public CreatePedidoRequest() {}
     }
-}
 
+    public static class CreatePedidoResponse {
+        public Integer pedidoId;
+        public Pedido.Estado estado;
+        public String metodoPago;
+        public BigDecimal total;
+    }
+}

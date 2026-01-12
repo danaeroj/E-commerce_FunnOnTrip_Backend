@@ -1,6 +1,8 @@
 package FunOnTrip.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,9 +12,9 @@ import java.util.List;
  * Entidad: Pedido
  * Mapea la tabla "Pedidos".
  *
- * Conexiones:
- * - Se conecta con Usuario solo por el ID (Usuarios_idUsuarios) mientras Usuario.java no exista.
- * - Se conecta con DetallePedido con OneToMany.
+ * Nota:
+ * - Maneja usuario por ID (Usuarios_idUsuarios).
+ * - Evita JSON infinito usando JsonManagedReference (con JsonBackReference en DetallePedido).
  */
 @Entity
 @Table(name = "Pedidos")
@@ -21,15 +23,13 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idPedidos")
-    private Integer id;
+    private Integer idPedidos;
 
-    /**
-     * FK hacia Usuarios. Por ahora se maneja como Integer para no depender de Usuario.java.
-     */
     @Column(name = "Usuarios_idUsuarios", nullable = false)
     private Integer usuarioId;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<DetallePedido> detalles = new ArrayList<>();
 
     @Column(name = "subtotal", precision = 10, scale = 2, nullable = false)
@@ -65,23 +65,30 @@ public class Pedido {
 
     public Pedido() {}
 
+    // Helpers para mantener relación bidireccional consistente
     public void addDetalle(DetallePedido detalle) {
+        if (detalle == null) return;
         detalles.add(detalle);
         detalle.setPedido(this);
     }
 
     public void removeDetalle(DetallePedido detalle) {
+        if (detalle == null) return;
         detalles.remove(detalle);
         detalle.setPedido(null);
     }
 
-    public Integer getId() { return id; }
+    // Getters / Setters
+    public Integer getIdPedidos() { return idPedidos; }
+    public Integer getId() { return idPedidos; } // alias útil por si en tu código usas getId()
 
     public Integer getUsuarioId() { return usuarioId; }
     public void setUsuarioId(Integer usuarioId) { this.usuarioId = usuarioId; }
 
     public List<DetallePedido> getDetalles() { return detalles; }
-    public void setDetalles(List<DetallePedido> detalles) { this.detalles = detalles; }
+    public void setDetalles(List<DetallePedido> detalles) {
+        this.detalles = (detalles != null) ? detalles : new ArrayList<>();
+    }
 
     public BigDecimal getSubtotal() { return subtotal; }
     public void setSubtotal(BigDecimal subtotal) { this.subtotal = subtotal; }
