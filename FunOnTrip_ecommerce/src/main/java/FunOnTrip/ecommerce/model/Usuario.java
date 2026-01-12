@@ -31,7 +31,7 @@ public class Usuario {
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro;
 
-    // 🔹 Constructor vacío (OBLIGATORIO para JPA)
+    // 🔹 Constructor vacío (JPA)
     public Usuario() {
     }
 
@@ -93,4 +93,10 @@ public class Usuario {
     public LocalDateTime getFechaRegistro() {
         return fechaRegistro;
     }
+
+    // 🔹 ESTE ERA EL QUE FALTABA
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
 }
+
