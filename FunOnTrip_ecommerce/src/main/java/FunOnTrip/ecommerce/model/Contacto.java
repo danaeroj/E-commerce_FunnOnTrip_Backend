@@ -20,6 +20,9 @@ public class Contacto {
     @Email
     @Column(nullable = false, length = 155)
     private String correoElectronico;
+    
+    @Column(length = 20)
+    private String telefono;
 
     @NotBlank
     @Column(nullable = false, length = 255)
@@ -28,6 +31,8 @@ public class Contacto {
     @NotBlank
     @Column(nullable = false, length = 445)
     private String mensaje;
+    
+    private Boolean atendido = false;
 
     @Column(name = "fecha_envio")
     private LocalDate fechaEnvio;

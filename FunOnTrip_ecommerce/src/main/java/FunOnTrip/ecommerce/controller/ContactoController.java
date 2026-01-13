@@ -8,9 +8,9 @@ import jakarta.validation.Valid;
 import FunOnTrip.ecommerce.model.Contacto;
 import FunOnTrip.ecommerce.service.ContactoService;
 
-// @RestController
-// @RequestMapping("/api/contacto")
-// @CrossOrigin
+@RestController
+@RequestMapping("/api/contactos")
+@CrossOrigin
 public class ContactoController {
 
     private final ContactoService contactoService;
@@ -27,6 +27,17 @@ public class ContactoController {
     @GetMapping
     public List<Contacto> listar() {
         return contactoService.obtenerTodos();
+    }
+
+    @GetMapping("/{id}")
+    public Contacto obtener(@PathVariable Integer id) {
+        return contactoService.obtenerPorId(id);
+    }
+
+    @PutMapping("/{id}")
+    public Contacto actualizar(@PathVariable Integer id,
+                               @Valid @RequestBody Contacto contacto) {
+        return contactoService.actualizar(id, contacto);
     }
 
     @DeleteMapping("/{id}")

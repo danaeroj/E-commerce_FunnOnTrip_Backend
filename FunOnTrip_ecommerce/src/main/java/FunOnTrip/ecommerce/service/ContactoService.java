@@ -25,4 +25,20 @@ public class ContactoService {
     public void eliminar(Integer id) {
         contactoRepository.deleteById(id);
     }
+    public Contacto obtenerPorId(Integer id) {
+        return contactoRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Contacto no encontrado"));
+    }
+
+    public Contacto actualizar(Integer id, Contacto contacto) {
+        Contacto existente = obtenerPorId(id);
+        existente.setNombre(contacto.getNombre());
+        existente.setCorreoElectronico(contacto.getCorreoElectronico());
+        existente.setTelefono(contacto.getTelefono());
+        existente.setAsunto(contacto.getAsunto());
+        existente.setMensaje(contacto.getMensaje());
+        existente.setAtendido(contacto.getAtendido());
+        return contactoRepository.save(existente);
+    }
+
 }
