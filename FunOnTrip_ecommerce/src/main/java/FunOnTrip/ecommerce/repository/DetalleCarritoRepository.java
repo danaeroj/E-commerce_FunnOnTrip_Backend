@@ -8,10 +8,10 @@ import java.util.Optional;
 
 public interface DetalleCarritoRepository extends JpaRepository<DetalleCarrito, Integer> {
 
-    List<DetalleCarrito> findByCarrito_IdCarrito(Integer carritoId);
+    List<DetalleCarrito> findByCarrito_Id(Long carritoId);
 
-    Optional<DetalleCarrito> findByCarrito_IdCarritoAndProducto_IdProducto(
-            Integer carritoId,
+    Optional<DetalleCarrito> findByCarrito_IdAndProducto_Id(
+            Long carritoId,
             Long productoId
     );
 }

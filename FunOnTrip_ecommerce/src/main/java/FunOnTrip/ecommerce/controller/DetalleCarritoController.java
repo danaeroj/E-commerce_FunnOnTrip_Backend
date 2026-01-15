@@ -17,7 +17,7 @@ public class DetalleCarritoController {
     }
 
     @GetMapping("/carrito/{carritoId}")
-    public List<DetalleCarrito> getDetallesByCarrito(@PathVariable Integer carritoId) {
+    public List<DetalleCarrito> getDetallesByCarrito(@PathVariable Long carritoId) {
         return detalleService.getDetallesByCarrito(carritoId);
     }
 
@@ -28,12 +28,13 @@ public class DetalleCarritoController {
 
     @PostMapping
     public DetalleCarrito addProducto(
-            @RequestParam Integer carritoId,
+            @RequestParam Long carritoId,
             @RequestParam Long productoId,
             @RequestParam Integer cantidad) {
 
         return detalleService.addProducto(carritoId, productoId, cantidad);
     }
+
 
     @PutMapping("/{id}")
     public DetalleCarrito updateCantidad(

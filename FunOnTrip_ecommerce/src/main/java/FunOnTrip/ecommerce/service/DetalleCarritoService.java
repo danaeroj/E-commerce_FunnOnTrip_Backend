@@ -31,8 +31,8 @@ public class DetalleCarritoService {
 	/**
 	 * Obtener todos los detalles de un carrito
 	 */
-	public List<DetalleCarrito> getDetallesByCarrito(Integer carritoId) {
-		return detalleRepository.findByCarritoIdCarrito(carritoId);
+	public List<DetalleCarrito> getDetallesByCarrito(Long carritoId) {
+		return detalleRepository.findByCarrito_Id(carritoId);
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class DetalleCarritoService {
 	 * Si el producto ya existe, actualiza la cantidad
 	 */
 	@Transactional
-	public DetalleCarrito addProducto(Integer carritoId, Long productoId, Integer cantidad) {
+	public DetalleCarrito addProducto(Long carritoId, Long productoId, Integer cantidad) {
 		Carrito carrito = carritoRepository.findById(carritoId)
 				.orElseThrow(() -> new IllegalArgumentException("Carrito con id [" + carritoId + "] no existe"));
 
@@ -56,7 +56,7 @@ public class DetalleCarritoService {
 				.orElseThrow(() -> new IllegalArgumentException("Producto con id [" + productoId + "] no existe"));
 
 		// Verificar si el producto ya existe en el carrito
-		return detalleRepository.findByCarritoIdCarritoAndProductoIdProducto(carritoId, productoId)
+		return detalleRepository.findByCarrito_IdAndProducto_Id(carritoId, productoId)
 				.map(detalle -> {
 					// Si ya existe, sumar la cantidad
 					detalle.setCantidad(detalle.getCantidad() + cantidad);

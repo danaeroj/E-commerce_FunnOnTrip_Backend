@@ -73,6 +73,10 @@ public class DetalleCarrito {
     public void setCantidad(Integer cantidad) { this.cantidad = cantidad; }
     public BigDecimal getSubtotal() { return subtotal; }
     public Producto getProducto() { return producto; }
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
     public void setCarrito(Carrito carrito) { this.carrito = carrito; }
 }
 

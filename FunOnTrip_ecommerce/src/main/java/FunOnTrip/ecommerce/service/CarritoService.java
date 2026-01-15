@@ -121,12 +121,13 @@ public class CarritoService {
 
         Carrito carrito = getCarritoActivo(usuarioId);
 
-        DetalleCarrito detalle = DetalleCarritoRepository
+        DetalleCarrito detalle = detalleCarritoRepository //usar la instancia, no la clase
                 .findByCarrito_IdAndProducto_Id(carrito.getId(), productoId)
                 .orElseThrow(() ->
                         new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no está en el carrito"));
 
         detalleCarritoRepository.delete(detalle);
     }
+
 }
 
