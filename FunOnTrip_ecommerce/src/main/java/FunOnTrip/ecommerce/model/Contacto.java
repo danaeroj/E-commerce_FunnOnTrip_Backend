@@ -17,7 +17,7 @@ public class Contacto {
     private String nombre;
 
     @NotBlank
-    @Email
+    @Email 
     @Column(name = "correo_electronico", nullable = false, length = 100)
     private String correoElectronico;
 

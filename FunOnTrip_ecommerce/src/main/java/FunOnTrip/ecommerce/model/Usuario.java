@@ -41,7 +41,7 @@ public class Usuario {
         this.correoElectronico = correoElectronico;
         this.password = password;
         this.telefono = telefono;
-        this.rol = Rol.user;
+        this.rol = Rol.USER;
         this.fechaRegistro = LocalDateTime.now();
     }
 

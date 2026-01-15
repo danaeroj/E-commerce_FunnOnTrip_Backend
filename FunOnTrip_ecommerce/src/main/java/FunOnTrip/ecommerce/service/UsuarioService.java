@@ -57,7 +57,7 @@ public class UsuarioService {
         usuario.setCorreoElectronico(usuario.getCorreoElectronico().trim());
         usuario.setFechaRegistro(LocalDateTime.now());
         if (usuario.getRol() == null) {
-            usuario.setRol(Rol.user);
+            usuario.setRol(Rol.USER);
         }
 
         // Encriptar password
