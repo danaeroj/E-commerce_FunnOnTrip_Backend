@@ -1,12 +1,18 @@
 package FunOnTrip.ecommerce.repository;
 
-import FunOnTrip.ecommerce.model.Carrito;
+import FunOnTrip.ecommerce.model.DetalleCarrito;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 import java.util.Optional;
 
-public interface CarritoRepository extends JpaRepository<Carrito, Integer> {
+public interface DetalleCarritoRepository extends JpaRepository<DetalleCarrito, Integer> {
 
-    // IMPORTANTE: Usa Carrito.EstadoCarrito, no EstadoCarrito solo
-    Optional<Carrito> findByUsuario_IdAndEstado(Long usuarioId, Carrito.EstadoCarrito estado);
+    List<DetalleCarrito> findByCarrito_IdCarrito(Integer carritoId);
 
+    Optional<DetalleCarrito> findByCarrito_IdCarritoAndProducto_IdProducto(
+            Integer carritoId,
+            Long productoId
+    );
 }
+
