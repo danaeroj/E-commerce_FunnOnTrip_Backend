@@ -2,10 +2,10 @@ package FunOnTrip.ecommerce.controller;
 
 import FunOnTrip.ecommerce.model.Producto;
 import FunOnTrip.ecommerce.service.ProductoService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -19,67 +19,67 @@ public class ProductoController {
         this.service = service;
     }
 
-    // CREATE
+    // POST /api/productos (ADMIN)
     @PostMapping
     public ResponseEntity<Producto> crearProducto(@RequestBody Producto producto) {
-        Producto creado = service.crearProducto(producto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(creado);
+        return ResponseEntity.ok(service.crearProducto(producto));
     }
 
-    // READ ALL
+    // GET /api/productos (PUBLIC)
     @GetMapping
     public ResponseEntity<List<Producto>> obtenerProductos() {
         return ResponseEntity.ok(service.obtenerProductos());
     }
 
-    // READ BY ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Producto> obtenerProductoPorId(@PathVariable  ("id")  Long id) {
-        return ResponseEntity.ok(service.obtenerProductoPorId(id));
-    }
-
-    // READ ACTIVOS
+    // GET /api/productos/activos (PUBLIC)
     @GetMapping("/activos")
     public ResponseEntity<List<Producto>> obtenerProductosActivos() {
         return ResponseEntity.ok(service.obtenerProductosActivos());
     }
-    @PatchMapping("/{id}")
-    public Producto actualizarProducto(@PathVariable("id") Long id,
-                                       @RequestBody Producto producto) {
-        return service.updateProducto(id, producto);
+
+    // GET /api/productos/{id} (PUBLIC)
+    @GetMapping("/{id}")
+    public ResponseEntity<Producto> obtenerProductoPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(service.obtenerProductoPorId(id));
     }
 
- // PATCH - cambiar SOLO stock
- // PATCH http://localhost:8080/api/productos/1/stock
- // Body: { "stock": 25 }
- @PatchMapping("/{id}/stock")
- public ResponseEntity<Producto> actualizarStock(@PathVariable ("id") Long id,
-                                                @RequestBody UpdateStockRequest body) {
-     return ResponseEntity.ok(service.actualizarStock(id, body.stock));
- }
+    // PATCH /api/productos/{id} (ADMIN) - update parcial
+    @PatchMapping("/{id}")
+    public ResponseEntity<Producto> patchProducto(@PathVariable Long id,
+                                                  @RequestBody Producto producto) {
+        return ResponseEntity.ok(service.updateProducto(id, producto));
+    }
 
- public static class UpdateStockRequest {
-     public Integer stock;
- }
+    // PATCH /api/productos/{id}/stock (ADMIN)
+    @PatchMapping("/{id}/stock")
+    public ResponseEntity<Producto> patchStock(@PathVariable Long id,
+                                               @RequestBody UpdateStockRequest body) {
+        return ResponseEntity.ok(service.actualizarStock(id, body.stock));
+    }
 
- // PATCH - cambiar SOLO precio
- // PATCH http://localhost:8080/api/productos/1/precio
- // Body: { "precio": 199.99 }
- @PatchMapping("/{id}/precio")
- public ResponseEntity<Producto> actualizarPrecio(@PathVariable  ("id")  Long id,
-                                                 @RequestBody UpdatePrecioRequest body) {
-     return ResponseEntity.ok(service.actualizarPrecio(id, body.precio));
- }
+    // PATCH /api/productos/{id}/precio (ADMIN)
+    @PatchMapping("/{id}/precio")
+    public ResponseEntity<Producto> patchPrecio(@PathVariable Long id,
+                                                @RequestBody UpdatePrecioRequest body) {
+        return ResponseEntity.ok(service.actualizarPrecio(id, body.precio));
+    }
 
- public static class UpdatePrecioRequest {
-     public Double precio; // o BigDecimal si tu modelo usa BigDecimal
- }
-
-
-    // DELETE lógico (desactivar)
+    // DELETE lógico /api/productos/{id} (ADMIN)
+    // REST correcto: 204 No Content
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarProducto(@PathVariable  ("id")  Long id) {
+    public ResponseEntity<Void> eliminarProducto(@PathVariable Long id) {
         service.eliminarProducto(id);
         return ResponseEntity.noContent().build();
     }
+
+    // ===== DTOs =====
+    public static class UpdateStockRequest {
+        public Integer stock;
+    }
+
+    public static class UpdatePrecioRequest {
+        public BigDecimal precio;
+    }
 }
+
+ 

@@ -94,7 +94,7 @@ public class Usuario {
         return fechaRegistro;
     }
 
-    // 🔹 ESTE ERA EL QUE FALTABA
+    // 
     public void setFechaRegistro(LocalDateTime fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }

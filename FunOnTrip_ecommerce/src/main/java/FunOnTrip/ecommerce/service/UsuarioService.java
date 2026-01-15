@@ -14,6 +14,8 @@ import FunOnTrip.ecommerce.model.Rol;
 import FunOnTrip.ecommerce.model.Usuario;
 import FunOnTrip.ecommerce.repository.UsuarioRepository;
 
+import FunOnTrip.ecommerce.security.AuthController.RegisterRequest;
+
 @Service
 public class UsuarioService {
 
@@ -37,6 +39,10 @@ public class UsuarioService {
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Usuario no encontrado con id: " + id));
     }
 
+    public Usuario getByEmail(String email) {
+    	  return usuarioRepository.findByCorreoElectronico(email)
+    	    .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Usuario no encontrado"));
+    	}
     // ===== CREATE =====
     @Transactional
     public Usuario createUsuario(Usuario usuario) {
@@ -65,6 +71,8 @@ public class UsuarioService {
 
         return usuarioRepository.save(usuario);
     }
+    
+    
 
     // ===== UPDATE (completo, pero seguro con nulls) =====
     @Transactional
@@ -90,6 +98,22 @@ public class UsuarioService {
         // Ojo: NO actualizo correo aquí para evitar problemas de unique.
         return usuarioRepository.save(usuario);
     }
+    
+    @Transactional
+    public Usuario register(RegisterRequest req) {
+      Usuario u = new Usuario();
+      u.setNombre(req.nombre);
+      u.setCorreoElectronico(req.correoElectronico);
+      u.setPassword(req.password);
+      u.setTelefono(req.telefono);
+      return createUsuario(u); // usa tu validación + encriptación
+    }
+
+    @Transactional(readOnly = true)
+    public Usuario getByEmail(String email) {
+      return usuarioRepository.findByCorreoElectronico(email)
+        .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Usuario no encontrado: " + email));
+    }
 
     // ===== DELETE =====
     @Transactional
@@ -99,6 +123,7 @@ public class UsuarioService {
     }
 
     // ===== PATCH: actualizar SOLO rol =====
+    
     @Transactional
     public Usuario actualizarRol(Long id, Rol rol) {
         Usuario usuario = getUsuarioById(id);
@@ -108,32 +133,32 @@ public class UsuarioService {
         usuario.setRol(rol);
         return usuarioRepository.save(usuario);
     }
+    
     @Transactional
     public Usuario updatePassword(Long id, PasswordChangeRequest req) {
-        if (req == null) {
-            throw new ResponseStatusException(BAD_REQUEST, "Body requerido");
-        }
-        if (req.currentPassword == null || req.currentPassword.isBlank()) {
-            throw new ResponseStatusException(BAD_REQUEST, "currentPassword es requerido");
-        }
-        if (req.newPassword == null || req.newPassword.isBlank()) {
-            throw new ResponseStatusException(BAD_REQUEST, "newPassword es requerido");
-        }
+      Usuario u = getUsuarioById(id);
 
-        Usuario u = getUsuarioById(id);
+      if (req == null || req.currentPassword == null || req.newPassword == null) {
+        throw new ResponseStatusException(BAD_REQUEST, "Body requerido");
+      }
+      if (!passwordEncoder.matches(req.currentPassword, u.getPassword())) {
+        throw new ResponseStatusException(BAD_REQUEST, "Contraseña anterior incorrecta");
+      }
+      if (req.newPassword.isBlank()) {
+        throw new ResponseStatusException(BAD_REQUEST, "newPassword es requerido");
+      }
 
-        // Validar contraseña anterior (comparando contra la encriptada)
-        if (!passwordEncoder.matches(req.currentPassword, u.getPassword())) {
-            throw new ResponseStatusException(BAD_REQUEST, "Contraseña anterior incorrecta");
-        }
+      u.setPassword(passwordEncoder.encode(req.newPassword));
+      return usuarioRepository.save(u);
+    }
 
-        // Guardar nueva contraseña encriptada
-        u.setPassword(passwordEncoder.encode(req.newPassword));
-        return usuarioRepository.save(u);
+    public static class PasswordChangeRequest {
+      public String currentPassword;
+      public String newPassword;
     }
 
     /** DTO para cambio de password */
-    public static class PasswordChangeRequest {
+    public static class PasswordChangeRequest1 {
         public String currentPassword;
         public String newPassword;
     }
