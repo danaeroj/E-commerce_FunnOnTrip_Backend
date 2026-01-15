@@ -143,6 +143,18 @@ public class PedidoService {
         pedido.setMetodoPago(metodoPago.trim());
         return pedidoRepository.save(pedido);
     }
+    
+    @Transactional
+    public Pedido solicitarCancelacion(Integer pedidoId, Integer usuarioId) {
+      Pedido p = getById(pedidoId);
+      if (!p.getUsuarioId().equals(usuarioId)) {
+        throw new ResponseStatusException(FORBIDDEN, "No puedes cancelar pedidos de otro usuario");
+      }
+      p.setEstado(Pedido.Estado.cancelacion_solicitada);
+      return pedidoRepository.save(p);
+    }
+
+
 
     @Transactional
     public void delete(Integer pedidoId) {

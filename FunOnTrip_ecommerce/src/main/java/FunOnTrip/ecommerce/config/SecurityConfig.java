@@ -34,34 +34,31 @@ public class SecurityConfig {
             .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
 
-                // auth público
+                // PUBLIC
                 .requestMatchers("/api/auth/**").permitAll()
-
-                // crear usuario público (opcional)
                 .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
-
-                // contacto: crear público (form)
                 .requestMatchers(HttpMethod.POST, "/api/contactos").permitAll()
-
-                // productos: GET público
                 .requestMatchers(HttpMethod.GET, "/api/productos/**").permitAll()
 
-                // productos: cambios solo admin
+                // ADMIN
+                .requestMatchers(HttpMethod.GET, "/api/usuarios").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PATCH, "/api/usuarios/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/usuarios/**").hasRole("ADMIN")
+
                 .requestMatchers(HttpMethod.POST, "/api/productos/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PATCH, "/api/productos/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/api/productos/**").hasRole("ADMIN")
 
-                // pedidos
-                .requestMatchers(HttpMethod.DELETE, "/api/pedidos/**").hasRole("ADMIN")
-                .requestMatchers("/api/pedidos/**").authenticated()
+                .requestMatchers(HttpMethod.GET, "/api/contactos/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/api/pedidos").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PATCH, "/api/pedidos/*/estado-final").hasRole("ADMIN")
 
-                // carritos: normalmente auth
+                // AUTHENTICATED
                 .requestMatchers("/api/carritos/**").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/pedidos").authenticated()
+                .requestMatchers(HttpMethod.GET, "/api/pedidos/**").authenticated()
+                .requestMatchers(HttpMethod.PATCH, "/api/pedidos/**").authenticated()
 
-                // contactos admin para ver/atender/borrar
-                .requestMatchers("/api/contactos/**").hasRole("ADMIN")
-
-                // todo lo demás
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
@@ -69,23 +66,21 @@ public class SecurityConfig {
         return http.build();
     }
 
-
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration config) throws Exception {
+    AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cfg = new CorsConfiguration();
-        cfg.setAllowedOriginPatterns(List.of("*"));
-        cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        cfg.setAllowedOriginPatterns(List.of("*")); // DEV
+        cfg.setAllowedMethods(List.of("GET","POST","PUT","PATCH","DELETE","OPTIONS"));
         cfg.setAllowedHeaders(List.of("*"));
         cfg.setAllowCredentials(false);
 

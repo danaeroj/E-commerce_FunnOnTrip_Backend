@@ -13,111 +13,66 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "Detalle_carrito")
+@Table(
+    name = "Detalle_carrito",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"Carrito_idCarrito", "Producto_idProducto"})
+    }
+)
 public class DetalleCarrito {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "idDetalle_carrito")
-	private Integer idDetalleCarrito;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idDetalle_carrito")
+    private Integer idDetalleCarrito;
 
-	@Column(nullable = false)
-	private Integer cantidad;
+    @Column(nullable = false)
+    private Integer cantidad;
 
-	@Column(nullable = false, precision = 10, scale = 2)
-	private BigDecimal subtotal;
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal subtotal;
 
-	@Column(name = "fecha_agregado", nullable = false, updatable = false)
-	private LocalDateTime fechaAgregado;
+    @Column(name = "fecha_agregado", nullable = false, updatable = false)
+    private LocalDateTime fechaAgregado;
 
-	@ManyToOne
-	@JoinColumn(name = "Carrito_idCarrito", nullable = false)
-	private Carrito carrito;
+    @ManyToOne
+    @JoinColumn(name = "Carrito_idCarrito", nullable = false)
+    private Carrito carrito;
 
-	@ManyToOne
-	@JoinColumn(name = "Producto_idProducto", nullable = false)
-	private Producto producto;
+    @ManyToOne
+    @JoinColumn(name = "Producto_idProducto", nullable = false)
+    private Producto producto;
 
-	// Constructores
-	public DetalleCarrito() {
-		this.fechaAgregado = LocalDateTime.now();
-	}
+    public DetalleCarrito() {
+        this.fechaAgregado = LocalDateTime.now();
+    }
 
-	public DetalleCarrito(Carrito carrito, Producto producto, Integer cantidad) {
-		this();
-		this.carrito = carrito;
-		this.producto = producto;
-		this.cantidad = cantidad;
-		calcularSubtotal();
-	}
+    public DetalleCarrito(Carrito carrito, Producto producto, Integer cantidad) {
+        this();
+        this.carrito = carrito;
+        this.producto = producto;
+        this.cantidad = cantidad;
+        calcularSubtotal();
+    }
 
-	// Calcular subtotal automáticamente antes de guardar o actualizar
-	@PrePersist
-	@PreUpdate
-	public void calcularSubtotal() {
-		if (this.producto != null && this.cantidad != null) {
-			this.subtotal = BigDecimal.valueOf(this.producto.getPrecio())
-			        .multiply(BigDecimal.valueOf(this.cantidad));
+    @PrePersist
+    @PreUpdate
+    private void calcularSubtotal() {
+        if (producto != null && cantidad != null) {
+            this.subtotal = BigDecimal
+                    .valueOf(producto.getPrecio())
+                    .multiply(BigDecimal.valueOf(cantidad));
+        }
+    }
 
-		}
-	}
-
-	// Getters y Setters
-	public Integer getIdDetalleCarrito() {
-		return idDetalleCarrito;
-	}
-
-	public void setIdDetalleCarrito(Integer idDetalleCarrito) {
-		this.idDetalleCarrito = idDetalleCarrito;
-	}
-
-	public Integer getCantidad() {
-		return cantidad;
-	}
-
-	public void setCantidad(Integer cantidad) {
-		this.cantidad = cantidad;
-		calcularSubtotal();
-	}
-
-	public BigDecimal getSubtotal() {
-		return subtotal;
-	}
-
-	public void setSubtotal(BigDecimal subtotal) {
-		this.subtotal = subtotal;
-	}
-
-	public LocalDateTime getFechaAgregado() {
-		return fechaAgregado;
-	}
-
-	public void setFechaAgregado(LocalDateTime fechaAgregado) {
-		this.fechaAgregado = fechaAgregado;
-	}
-
-	public Carrito getCarrito() {
-		return carrito;
-	}
-
-	public void setCarrito(Carrito carrito) {
-		this.carrito = carrito;
-	}
-
-	public Producto getProducto() {
-		return producto;
-	}
-
-	public void setProducto(Producto producto) {
-		this.producto = producto;
-		calcularSubtotal();
-	}
-
-	@Override
-	public String toString() {
-		return "DetalleCarrito [idDetalleCarrito=" + idDetalleCarrito + ", cantidad=" + cantidad + ", subtotal="
-				+ subtotal + "]";
-	}
+    public Integer getIdDetalleCarrito() { return idDetalleCarrito; }
+    public Integer getCantidad() { return cantidad; }
+    public void setCantidad(Integer cantidad) { this.cantidad = cantidad; }
+    public BigDecimal getSubtotal() { return subtotal; }
+    public Producto getProducto() { return producto; }
+    public void setCarrito(Carrito carrito) { this.carrito = carrito; }
 }
+

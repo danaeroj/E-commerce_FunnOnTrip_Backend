@@ -1,17 +1,15 @@
 package FunOnTrip.ecommerce.controller;
 
-import java.util.List;
-
-import org.springframework.web.bind.annotation.*;
-
 import FunOnTrip.ecommerce.model.Rol;
 import FunOnTrip.ecommerce.model.Usuario;
 import FunOnTrip.ecommerce.service.UsuarioService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/usuarios")
-@CrossOrigin(origins = "*")
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
@@ -20,61 +18,48 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    // GET - todos
     @GetMapping
     public List<Usuario> getUsuarios() {
         return usuarioService.getAllUsuarios();
     }
 
-    // GET - por id
     @GetMapping("/{id}")
-    public Usuario getUsuario(@PathVariable("id") Long id) {
+    public Usuario getUsuario(@PathVariable Long id) {
         return usuarioService.getUsuarioById(id);
     }
 
-    // POST - crear
     @PostMapping
     public Usuario crearUsuario(@RequestBody Usuario usuario) {
         return usuarioService.createUsuario(usuario);
     }
 
-
-
-    // DELETE - eliminar
-    @DeleteMapping("/{id}")
-    public void eliminarUsuario(@PathVariable("id") Long id) {
-        usuarioService.deleteUsuario(id);
+    @GetMapping("/me")
+    public Usuario me(@AuthenticationPrincipal org.springframework.security.core.userdetails.User user) {
+        return usuarioService.getByEmail(user.getUsername());
     }
 
-    // PATCH - cambiar SOLO rol
-    // Ej: PATCH /api/usuarios/6/rol?rol=admin
+    @PatchMapping("/me/password")
+    public Usuario cambiarPassword(
+            @AuthenticationPrincipal org.springframework.security.core.userdetails.User user,
+            @RequestBody UsuarioService.PasswordChangeRequest req) {
+
+        Usuario u = usuarioService.getByEmail(user.getUsername());
+        return usuarioService.updatePassword(u.getId(), req);
+    }
+
     @PatchMapping("/{id}/rol")
-    public Usuario actualizarRol(@PathVariable("id") Long id,
-                                 @RequestParam("rol") Rol rol) {
+    public Usuario actualizarRol(@PathVariable Long id, @RequestParam Rol rol) {
         return usuarioService.actualizarRol(id, rol);
     }
-    
-        // PATCH - actualizar 
- // PATCH - actualizar campos parciales (nombre, telefono, etc.)
+
     @PatchMapping("/{id}")
-    public Usuario actualizarUsuario(@PathVariable("id") Long id,
-                                     @RequestBody Usuario usuario) {
+    public Usuario actualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
         return usuarioService.updateUsuario(id, usuario);
     }
-    
- // PATCH - cambiar password con password anterior
- // Ej: PATCH /api/usuarios/6/password
- @PatchMapping("/{id}/password")
- public Usuario actualizarPassword(@PathVariable("id") Long id,
-                                   @RequestBody UsuarioService.PasswordChangeRequest req) {
-     return usuarioService.updatePassword(id, req);
- }
 
-
- // DTO interno (puede ir al final del controller o en paquete dto)
- public static class PasswordChangeRequest {
-     public String currentPassword;
-     public String newPassword;
- }
-
+    @DeleteMapping("/{id}")
+    public void eliminarUsuario(@PathVariable Long id) {
+        usuarioService.deleteUsuario(id);
+    }
 }
+
