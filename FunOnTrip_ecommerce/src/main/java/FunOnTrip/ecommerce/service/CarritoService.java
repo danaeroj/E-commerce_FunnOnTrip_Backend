@@ -1,88 +1,69 @@
 package FunOnTrip.ecommerce.service;
 
 import java.util.List;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import FunOnTrip.ecommerce.model.Carrito;
-import FunOnTrip.ecommerce.model.EstadoCarrito;
 import FunOnTrip.ecommerce.model.Usuario;
 import FunOnTrip.ecommerce.repository.CarritoRepository;
 import FunOnTrip.ecommerce.repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CarritoService {
 
-	private final CarritoRepository carritoRepository;
-	private final UsuarioRepository usuarioRepository;
+    private final CarritoRepository carritoRepository;
+    private final UsuarioRepository usuarioRepository;
 
-	@Autowired
-	public CarritoService(CarritoRepository carritoRepository, UsuarioRepository usuarioRepository) {
-		this.carritoRepository = carritoRepository;
-		this.usuarioRepository = usuarioRepository;
-	}
+    public CarritoService(CarritoRepository carritoRepository, UsuarioRepository usuarioRepository) {
+        this.carritoRepository = carritoRepository;
+        this.usuarioRepository = usuarioRepository;
+    }
 
-	/**
-	 * Obtener todos los carritos
-	 */
-	public List<Carrito> getAllCarritos() {
-		return carritoRepository.findAll();
-	}
+    public List<Carrito> obtenerTodos() {
+        return carritoRepository.findAll();
+    }
 
-	/**
-	 * Obtener un carrito por ID
-	 */
-	public Carrito getCarritoById(Integer id) {
-		return carritoRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("El carrito con id [" + id + "] no existe"));
-	}
+    public Carrito obtenerPorId(Integer id) {
+        return carritoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Carrito con id [" + id + "] no encontrado"));
+    }
 
-	/**
-	 * Obtener o crear carrito activo de un usuario
-	 * Si el usuario no tiene carrito activo, crea uno nuevo
-	 */
-	@Transactional
-	public Carrito getOrCreateCarritoActivo(Long usuarioId) {
-		return carritoRepository.findByUsuarioIdUsuariosAndEstado(usuarioId, EstadoCarrito.ACTIVO)
-				.orElseGet(() -> {
-					Usuario usuario = usuarioRepository.findById(usuarioId)
-							.orElseThrow(() -> new IllegalArgumentException("Usuario con id [" + usuarioId + "] no existe"));
+    @Transactional
+    public Carrito getOrCreateCarritoActivo(Long usuarioId) {
+        // Usa Carrito.EstadoCarrito.ACTIVO
+        return carritoRepository.findByUsuario_IdAndEstado(usuarioId, Carrito.EstadoCarrito.ACTIVO)
+                .orElseGet(() -> {
+                    Usuario usuario = usuarioRepository.findById(usuarioId)
+                            .orElseThrow(() -> new IllegalArgumentException(
+                                    "Usuario con id [" + usuarioId + "] no existe"));
 
-					Carrito nuevoCarrito = new Carrito(usuario);
-					return carritoRepository.save(nuevoCarrito);
-				});
-	}
+                    Carrito nuevoCarrito = new Carrito(usuario);
+                    nuevoCarrito.setEstado(Carrito.EstadoCarrito.ACTIVO);
+                    return carritoRepository.save(nuevoCarrito);
+                });
+    }
 
-	/**
-	 * Crear un nuevo carrito para un usuario
-	 */
-	@Transactional
-	public Carrito createCarrito(Long usuarioId) {
-		Usuario usuario = usuarioRepository.findById(usuarioId)
-				.orElseThrow(() -> new IllegalArgumentException("Usuario con id [" + usuarioId + "] no existe"));
+    @Transactional
+    public Carrito crearCarrito(Long usuarioId) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario con id [" + usuarioId + "] no existe"));
 
-		Carrito carrito = new Carrito(usuario);
-		return carritoRepository.save(carrito);
-	}
+        Carrito carrito = new Carrito(usuario);
+        carrito.setEstado(Carrito.EstadoCarrito.ACTIVO);
+        return carritoRepository.save(carrito);
+    }
 
-	/**
-	 * Actualizar estado del carrito
-	 */
-	@Transactional
-	public Carrito updateEstadoCarrito(Integer carritoId, EstadoCarrito nuevoEstado) {
-		Carrito carrito = getCarritoById(carritoId);
-		carrito.setEstado(nuevoEstado);
-		return carritoRepository.save(carrito);
-	}
+    @Transactional
+    public Carrito updateEstadoCarrito(Integer carritoId, Carrito.EstadoCarrito nuevoEstado) {
+        Carrito carrito = obtenerPorId(carritoId);
+        carrito.setEstado(nuevoEstado);
+        return carritoRepository.save(carrito);
+    }
 
-	/**
-	 * Eliminar un carrito
-	 */
-	@Transactional
-	public Carrito deleteCarrito(Integer id) {
-		Carrito carrito = getCarritoById(id);
-		carritoRepository.delete(carrito);
-		return carrito;
-	}
+    @Transactional
+    public void eliminarCarrito(Integer id) {
+        Carrito carrito = obtenerPorId(id);
+        carritoRepository.delete(carrito);
+    }
 }

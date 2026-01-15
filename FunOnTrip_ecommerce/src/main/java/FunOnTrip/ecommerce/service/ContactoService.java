@@ -35,6 +35,13 @@ public class ContactoService {
     }
 
     /**
+     * Obtener contactos no atendidos
+     */
+    public List<Contacto> obtenerNoAtendidos() {
+        return contactoRepository.findByAtendidoFalse();
+    }
+
+    /**
      * Obtener contacto por ID
      */
     public Contacto obtenerPorId(Integer id) {

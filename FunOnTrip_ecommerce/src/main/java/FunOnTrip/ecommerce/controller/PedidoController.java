@@ -26,33 +26,26 @@ public class PedidoController {
     }
 
     @GetMapping("/{id}")
-    public Pedido getById(@PathVariable Integer id) {
+    public Pedido getById(@PathVariable("id") Integer id) {
         return pedidoService.getByIdWithDetalles(id);
     }
 
+
+    // FIX: PathVariable + llamas al service (no al repo)
     @GetMapping("/usuario/{usuarioId}")
-    public List<Pedido> getByUsuario(@PathVariable Integer usuarioId) {
+    public List<Pedido> getByUsuario(@PathVariable ("usuarioId") Integer usuarioId) {
         return pedidoService.getByUsuario(usuarioId);
     }
 
-    /**
-     * POST /api/pedidos
-     * Body ejemplo:
-     * {
-     *   "usuarioId": 1,
-     *   "metodoPago": "cotizacion",
-     *   "items": [
-     *     { "productoId": 1, "cantidad": 2 },
-     *     { "productoId": 2, "cantidad": 1 }
-     *   ]
-     * }
-     */
+
     @PostMapping
     public ResponseEntity<CreatePedidoResponse> create(@RequestBody CreatePedidoRequest request) {
         Pedido creado = pedidoService.crearPedido(request.usuarioId, request.metodoPago, request.items);
 
         CreatePedidoResponse resp = new CreatePedidoResponse();
-        resp.pedidoId = creado.getIdPedidos();   // o creado.getId()
+        // OJO: tu entidad Pedido debe tener getId() o getIdPedidos() consistente.
+        // Si tu campo es "id" con @Column(name="idPedidos"), normalmente el getter es getId().
+        resp.pedidoId = creado.getId(); // <-- cambia a getIdPedidos() solo si así se llama de verdad
         resp.estado = creado.getEstado();
         resp.metodoPago = creado.getMetodoPago();
         resp.total = creado.getTotal();
@@ -60,21 +53,44 @@ public class PedidoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 
-    @PutMapping("/{id}/estado")
-    public Pedido updateEstado(@PathVariable Integer id, @RequestParam Pedido.Estado estado) {
-        return pedidoService.actualizarEstado(id, estado);
-    }
+  
+    
+ // PATCH - cambiar SOLO estado
+ // Ej: PATCH /api/pedidos/10/estado
+ // Body: {"estado":"cancelado"}
+ @PatchMapping("/{id}/estado")
+ public Pedido actualizarEstado(@PathVariable("id") Integer id,
+                                @RequestBody UpdateEstadoRequest body) {
+     if (body == null || body.estado == null) {
+         throw new org.springframework.web.server.ResponseStatusException(
+                 org.springframework.http.HttpStatus.BAD_REQUEST,
+                 "estado es requerido"
+         );
+     }
+     return pedidoService.actualizarEstado(id, body.estado);
+ }
 
-    @PutMapping("/{id}/metodo-pago")
-    public Pedido updateMetodoPago(@PathVariable Integer id, @RequestParam String metodoPago) {
-        return pedidoService.actualizarMetodoPago(id, metodoPago);
-    }
+ public static class UpdateEstadoRequest {
+     public Pedido.Estado estado;
+ }
+
+
+
+//PATCH - cambiar SOLO método de pago
+//Ej: PATCH /api/pedidos/10/metodo-pago?metodoPago=TARJETA
+@PatchMapping("/{id}/metodo-pago")
+public Pedido updateMetodoPago(@PathVariable("id") Integer id,
+                             @RequestParam("metodoPago") String metodoPago) {
+  return pedidoService.actualizarMetodoPago(id, metodoPago);
+}
+
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
         pedidoService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
 
     // ========= DTOs internos =========
 

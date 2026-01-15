@@ -47,7 +47,8 @@ public class Pedido {
         procesando,
         enviado,
         completado,
-        cancelado
+        cancelado,
+        cancelacion_solicitada
     }
 
     @Enumerated(EnumType.STRING)

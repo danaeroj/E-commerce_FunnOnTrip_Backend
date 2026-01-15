@@ -30,12 +30,12 @@ public class DetallePedidoController {
     }
 
     @GetMapping("/{id}")
-    public DetallePedido getById(@PathVariable Integer id) {
+    public DetallePedido getById(@PathVariable("id") Integer id) {
         return detallePedidoService.getById(id);
     }
 
     @GetMapping("/pedido/{pedidoId}")
-    public List<DetallePedido> getByPedido(@PathVariable Integer pedidoId) {
+    public List<DetallePedido> getByPedido(@PathVariable("id") Integer pedidoId) {
         return detallePedidoService.getByPedido(pedidoId);
     }
 
@@ -57,12 +57,12 @@ public class DetallePedidoController {
      * PUT /api/detalles-pedidos/{id}/cantidad?nuevaCantidad=5
      */
     @PutMapping("/{id}/cantidad")
-    public DetallePedido updateCantidad(@PathVariable Integer id, @RequestParam Integer nuevaCantidad) {
+    public DetallePedido updateCantidad(@PathVariable ("id") Integer id, @RequestParam Integer nuevaCantidad) {
         return detallePedidoService.updateCantidad(id, nuevaCantidad);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable ("id") Integer id) {
         detallePedidoService.delete(id);
         return ResponseEntity.noContent().build();
     }
