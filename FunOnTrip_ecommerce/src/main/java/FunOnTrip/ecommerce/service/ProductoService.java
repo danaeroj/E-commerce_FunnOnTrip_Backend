@@ -2,6 +2,8 @@ package FunOnTrip.ecommerce.service;
 
 import FunOnTrip.ecommerce.model.Producto;
 import FunOnTrip.ecommerce.repository.ProductoRepository;
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,23 +40,47 @@ public class ProductoService {
     }
 
     // UPDATE
-    public Producto actualizarProducto(Long id, Producto producto) {
-        Producto existente = obtenerProductoPorId(id);
+    @Transactional
+    public Producto actualizarStock(Long id, Integer stock) {
+        Producto p = obtenerProductoPorId(id);
 
-        existente.setNombre(producto.getNombre());
-        existente.setDescripcion(producto.getDescripcion());
-        existente.setPrecio(producto.getPrecio());
-        existente.setStock(producto.getStock());
-        existente.setActivo(producto.getActivo());
+        if (stock == null) {
+            throw new RuntimeException("stock es requerido");
+        }
+        if (stock < 0) {
+            throw new RuntimeException("stock no puede ser negativo");
+        }
 
-        return repository.save(existente);
+        p.setStock(stock);
+        return repository.save(p);
     }
 
-    // DELETE lógico
-    public Producto eliminarProducto(Long id) {
+    @Transactional
+    public Producto actualizarPrecio(Long id, Double precio) {
+        Producto p = obtenerProductoPorId(id);
+
+        if (precio == null) {
+            throw new RuntimeException("precio es requerido");
+        }
+        if (precio < 0) {
+            throw new RuntimeException("precio no puede ser negativo");
+        }
+
+        p.setPrecio(precio);
+        return repository.save(p);
+    }
+
+ // DELETE lógico
+    public void eliminarProducto(Long id) {
         Producto producto = obtenerProductoPorId(id);
         producto.setActivo(false);
-        return repository.save(producto);
+        repository.save(producto);
     }
+
+	public Producto updateProducto(Long id, Producto producto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
 

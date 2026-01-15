@@ -1,82 +1,80 @@
 package FunOnTrip.ecommerce.controller;
 
-import java.util.List;
-
 import FunOnTrip.ecommerce.model.Carrito;
-import FunOnTrip.ecommerce.model.EstadoCarrito;
 import FunOnTrip.ecommerce.service.CarritoService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/carritos")
+@CrossOrigin(origins = "*")
 public class CarritoController {
 
-	private final CarritoService carritoService;
+    private final CarritoService carritoService;
 
-	@Autowired
-	public CarritoController(CarritoService carritoService) {
-		this.carritoService = carritoService;
-	}
+    public CarritoController(CarritoService carritoService) {
+        this.carritoService = carritoService;
+    }
 
-	/**
-	 * GET /api/carritos
-	 * Obtener todos los carritos
-	 */
-	@GetMapping
-	public List<Carrito> getAllCarritos() {
-		return carritoService.getAllCarritos();
-	}
+    @GetMapping
+    public ResponseEntity<List<Carrito>> getAll() {
+        return ResponseEntity.ok(carritoService.obtenerTodos());
+    }
 
-	/**
-	 * GET /api/carritos/{id}
-	 * Obtener un carrito por ID
-	 */
-	@GetMapping("/{id}")
-	public Carrito getCarritoById(@PathVariable Integer id) {
-		return carritoService.getCarritoById(id);
-	}
+    @GetMapping("/{id}")
+    public ResponseEntity<Carrito> getById(@PathVariable Integer id) {
+        return ResponseEntity.ok(carritoService.obtenerPorId(id));
+    }
 
-	/**
-	 * GET /api/carritos/usuario/{usuarioId}
-	 * Obtener o crear carrito activo de un usuario
-	 */
-	@GetMapping("/usuario/{usuarioId}")
-	public Carrito getCarritoActivo(@PathVariable Long usuarioId) {
-		return carritoService.getOrCreateCarritoActivo(usuarioId);
-	}
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<Carrito> getCarritoUsuario(@PathVariable Long usuarioId) {
+        return ResponseEntity.ok(carritoService.getOrCreateCarritoActivo(usuarioId));
+    }
 
-	/**
-	 * POST /api/carritos/usuario/{usuarioId}
-	 * Crear un nuevo carrito para un usuario
-	 */
-	@PostMapping("/usuario/{usuarioId}")
-	public Carrito createCarrito(@PathVariable Long usuarioId) {
-		return carritoService.createCarrito(usuarioId);
-	}
+    @PostMapping("/usuario/{usuarioId}")
+    public ResponseEntity<Carrito> create(@PathVariable Long usuarioId) {
+        return ResponseEntity.ok(carritoService.crearCarrito(usuarioId));
+    }
 
-	/**
-	 * PUT /api/carritos/{id}/estado?estado=CONVERTIDO
-	 * Actualizar estado del carrito
-	 */
-	@PutMapping("/{id}/estado")
-	public Carrito updateEstado(@PathVariable Integer id, @RequestParam EstadoCarrito estado) {
-		return carritoService.updateEstadoCarrito(id, estado);
-	}
+    // VERSIÓN CON QUERY PARAM
+    @PutMapping("/{id}/estado")
+    public ResponseEntity<Carrito> updateEstado(
+            @PathVariable Integer id,
+            @RequestParam String estado) {
+        
+        // Usa el método fromString del ENUM interno
+        Carrito.EstadoCarrito estadoEnum = Carrito.EstadoCarrito.fromString(estado);
+        return ResponseEntity.ok(carritoService.updateEstadoCarrito(id, estadoEnum));
+    }
+    
+    // VERSIÓN CON JSON EN BODY (opcional)
+    @PutMapping("/{id}")
+    public ResponseEntity<Carrito> updateCarrito(
+            @PathVariable Integer id,
+            @RequestBody UpdateEstadoRequest request) {
+        
+        Carrito.EstadoCarrito estadoEnum = Carrito.EstadoCarrito.fromString(request.getEstado());
+        return ResponseEntity.ok(carritoService.updateEstadoCarrito(id, estadoEnum));
+    }
 
-	/**
-	 * DELETE /api/carritos/{id}
-	 * Eliminar un carrito
-	 */
-	@DeleteMapping("/{id}")
-	public Carrito deleteCarrito(@PathVariable Integer id) {
-		return carritoService.deleteCarrito(id);
-	}
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        carritoService.eliminarCarrito(id);
+        return ResponseEntity.noContent().build();
+    }
+    
+    // CLASE INTERNA PARA EL REQUEST
+    public static class UpdateEstadoRequest {
+        private String estado;
+        
+        public String getEstado() {
+            return estado;
+        }
+        
+        public void setEstado(String estado) {
+            this.estado = estado;
+        }
+    }
 }

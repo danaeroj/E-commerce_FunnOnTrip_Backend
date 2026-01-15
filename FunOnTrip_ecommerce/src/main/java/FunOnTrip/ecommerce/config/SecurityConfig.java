@@ -1,27 +1,96 @@
 package FunOnTrip.ecommerce.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import FunOnTrip.ecommerce.security.JwtFilter;
+import org.springframework.context.annotation.*;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.*;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-  @Bean
-  SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    return http
-      .csrf(csrf -> csrf.disable())
-      .cors(cors -> {})
-      .authorizeHttpRequests(auth -> auth
-        .requestMatchers("/api/**").permitAll()
-        .anyRequest().permitAll()
-      )
-      .httpBasic(basic -> basic.disable())
-      .formLogin(form -> form.disable())
-      .build();
-  }
-}
+    private final JwtFilter jwtFilter;
 
+    public SecurityConfig(JwtFilter jwtFilter) {
+        this.jwtFilter = jwtFilter;
+    }
+
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(auth -> auth
+
+                // auth público
+                .requestMatchers("/api/auth/**").permitAll()
+
+                // crear usuario público (opcional)
+                .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
+
+                // contacto: crear público (form)
+                .requestMatchers(HttpMethod.POST, "/api/contactos").permitAll()
+
+                // productos: GET público
+                .requestMatchers(HttpMethod.GET, "/api/productos/**").permitAll()
+
+                // productos: cambios solo admin
+                .requestMatchers(HttpMethod.POST, "/api/productos/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PATCH, "/api/productos/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/productos/**").hasRole("ADMIN")
+
+                // pedidos
+                .requestMatchers(HttpMethod.DELETE, "/api/pedidos/**").hasRole("ADMIN")
+                .requestMatchers("/api/pedidos/**").authenticated()
+
+                // carritos: normalmente auth
+                .requestMatchers("/api/carritos/**").authenticated()
+
+                // contactos admin para ver/atender/borrar
+                .requestMatchers("/api/contactos/**").hasRole("ADMIN")
+
+                // todo lo demás
+                .anyRequest().authenticated()
+            )
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
+    }
+
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration cfg = new CorsConfiguration();
+        cfg.setAllowedOriginPatterns(List.of("*"));
+        cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        cfg.setAllowedHeaders(List.of("*"));
+        cfg.setAllowCredentials(false);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", cfg);
+        return source;
+    }
+}

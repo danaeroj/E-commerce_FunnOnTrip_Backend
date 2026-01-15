@@ -30,7 +30,7 @@ public class DetalleCarritoController {
 	 * Obtener todos los items de un carrito
 	 */
 	@GetMapping("/carrito/{carritoId}")
-	public List<DetalleCarrito> getDetallesByCarrito(@PathVariable Integer carritoId) {
+	public List<DetalleCarrito> getDetallesByCarrito(@PathVariable ("id") Integer carritoId) {
 		return detalleService.getDetallesByCarrito(carritoId);
 	}
 
@@ -39,7 +39,7 @@ public class DetalleCarritoController {
 	 * Obtener un detalle por ID
 	 */
 	@GetMapping("/{id}")
-	public DetalleCarrito getDetalleById(@PathVariable Integer id) {
+	public DetalleCarrito getDetalleById(@PathVariable ("id") Integer id) {
 		return detalleService.getDetalleById(id);
 	}
 
@@ -71,7 +71,7 @@ public class DetalleCarritoController {
 	 * Eliminar un item del carrito
 	 */
 	@DeleteMapping("/{id}")
-	public void deleteDetalle(@PathVariable Integer id) {
+	public void deleteDetalle(@PathVariable ("id") Integer id) {
 		detalleService.deleteDetalle(id);
 	}
 }
