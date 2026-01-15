@@ -1,80 +1,68 @@
 package FunOnTrip.ecommerce.controller;
 
 import FunOnTrip.ecommerce.model.Carrito;
+import FunOnTrip.ecommerce.model.CarritoItem;
 import FunOnTrip.ecommerce.service.CarritoService;
-import org.springframework.http.ResponseEntity;
+import FunOnTrip.ecommerce.service.UsuarioService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/carritos")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins="*")
 public class CarritoController {
 
-    private final CarritoService carritoService;
+  private final CarritoService carritoService;
+  private final UsuarioService usuarioService;
 
-    public CarritoController(CarritoService carritoService) {
-        this.carritoService = carritoService;
-    }
+  public CarritoController(CarritoService carritoService, UsuarioService usuarioService) {
+    this.carritoService = carritoService;
+    this.usuarioService = usuarioService;
+  }
 
-    @GetMapping
-    public ResponseEntity<List<Carrito>> getAll() {
-        return ResponseEntity.ok(carritoService.obtenerTodos());
-    }
+  // GET /api/carritos/me -> carrito activo
+  @GetMapping("/me")
+  public Carrito getMiCarrito(@AuthenticationPrincipal org.springframework.security.core.userdetails.User user) {
+    Long usuarioId = usuarioService.getByEmail(user.getUsername()).getId();
+    return carritoService.getActivo(usuarioId);
+  }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Carrito> getById(@PathVariable Integer id) {
-        return ResponseEntity.ok(carritoService.obtenerPorId(id));
-    }
+  // GET /api/carritos/me/items -> items
+  @GetMapping("/me/items")
+  public List<CarritoItem> getItems(@AuthenticationPrincipal org.springframework.security.core.userdetails.User user) {
+    Long usuarioId = usuarioService.getByEmail(user.getUsername()).getId();
+    return carritoService.getItems(usuarioId);
+  }
 
-    @GetMapping("/usuario/{usuarioId}")
-    public ResponseEntity<Carrito> getCarritoUsuario(@PathVariable Long usuarioId) {
-        return ResponseEntity.ok(carritoService.getOrCreateCarritoActivo(usuarioId));
-    }
+  // POST /api/carritos/me/items -> incrementa
+  @PostMapping("/me/items")
+  public void addItem(@AuthenticationPrincipal org.springframework.security.core.userdetails.User user,
+                      @RequestBody AddItemRequest req) {
+    Long usuarioId = usuarioService.getByEmail(user.getUsername()).getId();
+    carritoService.addItem(usuarioId, req.productoId, req.cantidad);
+  }
 
-    @PostMapping("/usuario/{usuarioId}")
-    public ResponseEntity<Carrito> create(@PathVariable Long usuarioId) {
-        return ResponseEntity.ok(carritoService.crearCarrito(usuarioId));
-    }
+  // PATCH /api/carritos/me/items/{productoId}?cantidad=3 -> set cantidad exacta
+  @PatchMapping("/me/items/{productoId}")
+  public void updateQty(@AuthenticationPrincipal org.springframework.security.core.userdetails.User user,
+                        @PathVariable Long productoId,
+                        @RequestParam Integer cantidad) {
+    Long usuarioId = usuarioService.getByEmail(user.getUsername()).getId();
+    carritoService.updateCantidad(usuarioId, productoId, cantidad);
+  }
 
-    // VERSIÓN CON QUERY PARAM
-    @PutMapping("/{id}/estado")
-    public ResponseEntity<Carrito> updateEstado(
-            @PathVariable Integer id,
-            @RequestParam String estado) {
-        
-        // Usa el método fromString del ENUM interno
-        Carrito.EstadoCarrito estadoEnum = Carrito.EstadoCarrito.fromString(estado);
-        return ResponseEntity.ok(carritoService.updateEstadoCarrito(id, estadoEnum));
-    }
-    
-    // VERSIÓN CON JSON EN BODY (opcional)
-    @PutMapping("/{id}")
-    public ResponseEntity<Carrito> updateCarrito(
-            @PathVariable Integer id,
-            @RequestBody UpdateEstadoRequest request) {
-        
-        Carrito.EstadoCarrito estadoEnum = Carrito.EstadoCarrito.fromString(request.getEstado());
-        return ResponseEntity.ok(carritoService.updateEstadoCarrito(id, estadoEnum));
-    }
+  // DELETE /api/carritos/me/items/{productoId}
+  @DeleteMapping("/me/items/{productoId}")
+  public void removeItem(@AuthenticationPrincipal org.springframework.security.core.userdetails.User user,
+                         @PathVariable Long productoId) {
+    Long usuarioId = usuarioService.getByEmail(user.getUsername()).getId();
+    carritoService.removeItem(usuarioId, productoId);
+  }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        carritoService.eliminarCarrito(id);
-        return ResponseEntity.noContent().build();
-    }
-    
-    // CLASE INTERNA PARA EL REQUEST
-    public static class UpdateEstadoRequest {
-        private String estado;
-        
-        public String getEstado() {
-            return estado;
-        }
-        
-        public void setEstado(String estado) {
-            this.estado = estado;
-        }
-    }
+  public static class AddItemRequest {
+    public Long productoId;
+    public Integer cantidad;
+  }
 }
