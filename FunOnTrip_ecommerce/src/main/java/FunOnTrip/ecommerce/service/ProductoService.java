@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import org.springframework.web.server.ResponseStatusException;
+import static org.springframework.http.HttpStatus.*;
 
 @Service
 public class ProductoService {
@@ -40,36 +42,25 @@ public class ProductoService {
     }
 
     // UPDATE
+   
     @Transactional
     public Producto actualizarStock(Long id, Integer stock) {
-        Producto p = obtenerProductoPorId(id);
-
-        if (stock == null) {
-            throw new RuntimeException("stock es requerido");
-        }
-        if (stock < 0) {
-            throw new RuntimeException("stock no puede ser negativo");
-        }
-
-        p.setStock(stock);
-        return repository.save(p);
+      if (stock == null || stock < 0) throw new ResponseStatusException(BAD_REQUEST, "stock inválido");
+      Producto p = obtenerProductoPorId(id);
+      p.setStock(stock);
+      return repository.save(p);
     }
 
     @Transactional
-    public Producto actualizarPrecio(Long id, Double precio) {
-        Producto p = obtenerProductoPorId(id);
-
-        if (precio == null) {
-            throw new RuntimeException("precio es requerido");
-        }
-        if (precio < 0) {
-            throw new RuntimeException("precio no puede ser negativo");
-        }
-
-        p.setPrecio(precio);
-        return repository.save(p);
+    public Producto actualizarPrecio(Long id, java.math.BigDecimal precio) {
+      if (precio == null || precio.compareTo(java.math.BigDecimal.ZERO) < 0)
+        throw new ResponseStatusException(BAD_REQUEST, "precio inválido");
+      Producto p = obtenerProductoPorId(id);
+      // si tu campo es Double, convierte:
+      p.setPrecio(precio.doubleValue());
+      return repository.save(p);
     }
-
+    
  // DELETE lógico
     public void eliminarProducto(Long id) {
         Producto producto = obtenerProductoPorId(id);

@@ -23,7 +23,7 @@ import jakarta.persistence.Table;
 @Table(name = "Carrito")
 public class Carrito {
 
-    // 🔥 ENUM DENTRO DE LA CLASE
+    // ENUM DENTRO DE LA CLASE
     public enum EstadoCarrito {
         ACTIVO,       // EN MAYÚSCULAS
         PENDIENTE,    // EN MAYÚSCULAS  
@@ -157,4 +157,9 @@ public class Carrito {
     public String toString() {
         return "Carrito [idCarrito=" + idCarrito + ", estado=" + estado + ", fechaCreacion=" + fechaCreacion + "]";
     }
+
+	public String getId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

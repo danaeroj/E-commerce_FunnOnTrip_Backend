@@ -20,77 +20,72 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final JwtFilter jwtFilter;
+  private final JwtFilter jwtFilter;
 
-    public SecurityConfig(JwtFilter jwtFilter) {
-        this.jwtFilter = jwtFilter;
-    }
+  public SecurityConfig(JwtFilter jwtFilter) {
+    this.jwtFilter = jwtFilter;
+  }
 
-    @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(csrf -> csrf.disable())
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
+  @Bean
+  SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http
+      .csrf(csrf -> csrf.disable())
+      .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+      .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+      .authorizeHttpRequests(auth -> auth
 
-                // auth público
-                .requestMatchers("/api/auth/**").permitAll()
+        // ===== PUBLIC =====
+        .requestMatchers("/api/auth/**").permitAll()
+        .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()     // registro sin token (si quieres)
+        .requestMatchers(HttpMethod.POST, "/api/contactos").permitAll()    // contacto público
+        .requestMatchers(HttpMethod.GET, "/api/productos/**").permitAll()  // ver productos público
 
-                // crear usuario público (opcional)
-                .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
+        // ===== ADMIN ONLY =====
+        .requestMatchers(HttpMethod.POST, "/api/productos/**").hasRole("ADMIN")
+        .requestMatchers(HttpMethod.PATCH, "/api/productos/**").hasRole("ADMIN")
+        .requestMatchers(HttpMethod.DELETE, "/api/productos/**").hasRole("ADMIN")
 
-                // contacto: crear público (form)
-                .requestMatchers(HttpMethod.POST, "/api/contactos").permitAll()
+        .requestMatchers(HttpMethod.GET, "/api/contactos/**").hasRole("ADMIN")
+        // Si decides NO borrar contactos, NO pongas DELETE aquí.
 
-                // productos: GET público
-                .requestMatchers(HttpMethod.GET, "/api/productos/**").permitAll()
+        .requestMatchers(HttpMethod.GET, "/api/pedidos").hasRole("ADMIN")               // ver todos
+        .requestMatchers(HttpMethod.PATCH, "/api/pedidos/*/estado-final").hasRole("ADMIN")
+        // Si quisieras borrar pedidos: .requestMatchers(HttpMethod.DELETE, "/api/pedidos/**").hasRole("ADMIN")
 
-                // productos: cambios solo admin
-                .requestMatchers(HttpMethod.POST, "/api/productos/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.PATCH, "/api/productos/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/api/productos/**").hasRole("ADMIN")
+        // ===== AUTHENTICATED =====
+        .requestMatchers("/api/carritos/**").authenticated()
+        .requestMatchers(HttpMethod.POST, "/api/pedidos").authenticated()
+        .requestMatchers(HttpMethod.GET, "/api/pedidos/**").authenticated()
+        .requestMatchers(HttpMethod.PATCH, "/api/pedidos/**").authenticated()
 
-                // pedidos
-                .requestMatchers(HttpMethod.DELETE, "/api/pedidos/**").hasRole("ADMIN")
-                .requestMatchers("/api/pedidos/**").authenticated()
+        // ===== DEFAULT =====
+        .anyRequest().authenticated()
+      )
+      .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
-                // carritos: normalmente auth
-                .requestMatchers("/api/carritos/**").authenticated()
+    return http.build();
+  }
 
-                // contactos admin para ver/atender/borrar
-                .requestMatchers("/api/contactos/**").hasRole("ADMIN")
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-                // todo lo demás
-                .anyRequest().authenticated()
-            )
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+  @Bean
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    return config.getAuthenticationManager();
+  }
 
-        return http.build();
-    }
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration cfg = new CorsConfiguration();
+    cfg.setAllowedOriginPatterns(List.of("*"));
+    cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+    cfg.setAllowedHeaders(List.of("*"));
+    cfg.setAllowCredentials(false);
 
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
-
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration cfg = new CorsConfiguration();
-        cfg.setAllowedOriginPatterns(List.of("*"));
-        cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        cfg.setAllowedHeaders(List.of("*"));
-        cfg.setAllowCredentials(false);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", cfg);
-        return source;
-    }
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", cfg);
+    return source;
+  }
 }

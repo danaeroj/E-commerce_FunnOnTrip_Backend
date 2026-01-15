@@ -8,4 +8,5 @@ public interface CarritoRepository extends JpaRepository<Carrito, Integer> {
 
     // IMPORTANTE: Usa Carrito.EstadoCarrito, no EstadoCarrito solo
     Optional<Carrito> findByUsuario_IdAndEstado(Long usuarioId, Carrito.EstadoCarrito estado);
+
 }

@@ -2,6 +2,7 @@ package FunOnTrip.ecommerce.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Usuarios")
@@ -34,6 +35,8 @@ public class Usuario {
     // 🔹 Constructor vacío (JPA)
     public Usuario() {
     }
+    @JsonIgnore
+    private String password1;
 
     // 🔹 Constructor útil
     public Usuario(String nombre, String correoElectronico, String password, String telefono) {
@@ -41,7 +44,7 @@ public class Usuario {
         this.correoElectronico = correoElectronico;
         this.password = password;
         this.telefono = telefono;
-        this.rol = Rol.user;
+        this.rol = Rol.USER;
         this.fechaRegistro = LocalDateTime.now();
     }
 

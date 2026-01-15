@@ -2,6 +2,7 @@ package FunOnTrip.ecommerce.controller;
 
 import java.util.List;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import FunOnTrip.ecommerce.model.Rol;
@@ -38,6 +39,18 @@ public class UsuarioController {
         return usuarioService.createUsuario(usuario);
     }
 
+    @GetMapping("/me")
+    public Usuario me(@AuthenticationPrincipal org.springframework.security.core.userdetails.User user) {
+      // user.getUsername() = correo
+      return usuarioService.getByEmail(user.getUsername());
+    }
+
+    @PatchMapping("/me/password")
+    public Usuario cambiarPassword(@AuthenticationPrincipal org.springframework.security.core.userdetails.User user,
+                                   @RequestBody UsuarioService.PasswordChangeRequest req) {
+      Usuario u = usuarioService.getByEmail(user.getUsername());
+      return usuarioService.updatePassword(u.getId(), req);
+    }
 
 
     // DELETE - eliminar
