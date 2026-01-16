@@ -20,54 +20,61 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final JwtFilter jwtFilter;
+        private final JwtFilter jwtFilter;
 
-    public SecurityConfig(JwtFilter jwtFilter) {
-        this.jwtFilter = jwtFilter;
-    }
+        public SecurityConfig(JwtFilter jwtFilter) {
+            this.jwtFilter = jwtFilter;
+        }
+     
+        @Bean
+        SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+            http
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
 
-    @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(csrf -> csrf.disable())
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
+                    // auth público
+                    .requestMatchers("/api/auth/**").permitAll()
 
-                // auth público
-                .requestMatchers("/api/auth/**").permitAll()
+                    // crear usuario público (opcional)
+                    .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
 
-                // crear usuario público (opcional)
-                .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
+                    .requestMatchers("/api/carritos/**").permitAll()
+                    
+                    .requestMatchers("/api/carritos/**/**").permitAll()
+                    
+                    // contacto: crear público (form)
+                    .requestMatchers(HttpMethod.POST, "/api/contacto").permitAll()
 
-                // contacto: crear público (form)
-                .requestMatchers(HttpMethod.POST, "/api/contactos").permitAll()
+                    // productos: GET público
+                    .requestMatchers(HttpMethod.GET, "/api/productos/**").permitAll()
 
-                // productos: GET público
-                .requestMatchers(HttpMethod.GET, "/api/productos/**").permitAll()
+                    // productos: cambios solo admin
+                    .requestMatchers(HttpMethod.POST, "/api/productos/**").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PATCH, "/api/productos/**").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/productos/**").hasRole("ADMIN")
 
-                // productos: cambios solo admin
-                .requestMatchers(HttpMethod.POST, "/api/productos/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.PATCH, "/api/productos/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/api/productos/**").hasRole("ADMIN")
+                    // pedidos
+                    .requestMatchers(HttpMethod.DELETE, "/api/pedidos/**").hasRole("ADMIN")
+                    .requestMatchers("/api/pedidos/**").authenticated()
 
-                // pedidos
-                .requestMatchers(HttpMethod.DELETE, "/api/pedidos/**").hasRole("ADMIN")
-                .requestMatchers("/api/pedidos/**").authenticated()
+                    // carritos: normalmente auth
+                    .requestMatchers("/api/carritos/**").authenticated()
 
-                // carritos: normalmente auth
-                .requestMatchers("/api/carritos/**").authenticated()
+                    // contactos admin para ver/atender/borrar
+                    .requestMatchers("/api/contacto/**").hasRole("ADMIN")
 
-                // contactos admin para ver/atender/borrar
-                .requestMatchers("/api/contactos/**").hasRole("ADMIN")
+                    // todo lo demás
+                    .anyRequest().authenticated()
+                )
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
-                // todo lo demás
-                .anyRequest().authenticated()
-            )
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+            return http.build();
+        }
 
-        return http.build();
-    }
+
+
 
 
     @Bean
