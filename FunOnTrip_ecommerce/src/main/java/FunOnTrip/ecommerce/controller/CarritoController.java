@@ -24,24 +24,24 @@ public class CarritoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Carrito> getById(@PathVariable Integer id) {
+    public ResponseEntity<Carrito> getById(@PathVariable("id") Integer id) {  // Aquí también
         return ResponseEntity.ok(carritoService.obtenerPorId(id));
     }
 
     @GetMapping("/usuario/{usuarioId}")
-    public ResponseEntity<Carrito> getCarritoUsuario(@PathVariable Long usuarioId) {
+    public ResponseEntity<Carrito> getCarritoUsuario(@PathVariable("usuarioId") Long usuarioId) {  // ¡CORRECTO!
         return ResponseEntity.ok(carritoService.getOrCreateCarritoActivo(usuarioId));
     }
 
     @PostMapping("/usuario/{usuarioId}")
-    public ResponseEntity<Carrito> create(@PathVariable Long usuarioId) {
+    public ResponseEntity<Carrito> create(@PathVariable("usuarioId") Long usuarioId) {  // ¡CORRECTO!
         return ResponseEntity.ok(carritoService.crearCarrito(usuarioId));
     }
 
     // VERSIÓN CON QUERY PARAM
     @PutMapping("/{id}/estado")
     public ResponseEntity<Carrito> updateEstado(
-            @PathVariable Integer id,
+            @PathVariable("id") Integer id,  // Aquí también
             @RequestParam String estado) {
         
         // Usa el método fromString del ENUM interno
@@ -52,7 +52,7 @@ public class CarritoController {
     // VERSIÓN CON JSON EN BODY (opcional)
     @PutMapping("/{id}")
     public ResponseEntity<Carrito> updateCarrito(
-            @PathVariable Integer id,
+            @PathVariable("id") Integer id,  // Aquí también
             @RequestBody UpdateEstadoRequest request) {
         
         Carrito.EstadoCarrito estadoEnum = Carrito.EstadoCarrito.fromString(request.getEstado());
@@ -60,7 +60,7 @@ public class CarritoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {  // Aquí también
         carritoService.eliminarCarrito(id);
         return ResponseEntity.noContent().build();
     }
