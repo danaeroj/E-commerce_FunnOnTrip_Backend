@@ -1,0 +1,246 @@
+body {
+  padding-top: 50px;
+}
+
+/* ============================
+   CARRUSEL
+   (DEJADO IGUAL)
+============================ */
+
+.carrusel-section h2 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+}
+
+/* Imagen del carrusel */
+.carrusel-img {
+  height: 550px;
+  object-fit: cover;
+  border-radius: 15px;
+
+}
+
+/* Flechas carrusel */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+
+  background-color: rgba(0, 0, 0, 0.8);
+  background-size: 60%;
+  border-radius: 50%;
+  padding: 20px;
+  transition: background-color 0.2s;
+}
+
+.carousel-control-prev-icon:hover,
+.carousel-control-next-icon:hover {
+  background-color: #ffc107;
+}
+
+/* ============================
+   TARJETAS DE VIAJE
+============================ */
+
+.destino-card,
+.promo-card {
+  border: none;                 /* Quita el borde que crea el doble contenedor */
+  border-radius: 15px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);  /* sombra limpia */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  display: block;        /* quita espacios fantasmas */
+  border-bottom: none;   /* evita doble borde */
+}
+
+/* Tarjetas separadas */
+.card-sep {
+  border-radius: 15px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+  padding: 5px;
+}
+
+/* Hover general de cards */
+.destino-card:hover,
+.promo-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+
+}
+
+/* Imagen de las tarjetas */
+.destino-card img,
+.promo-card img {
+
+  height: 170px;
+  object-fit: cover;
+}
+
+.card-body h5 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: "Montserrat", sans-serif;
+}
+
+.card-price {
+  font-family: "Nunito Sans", sans-serif;
+  color: #444;
+}
+
+/* ============================
+   BOTONES – VER MÁS / PROMO
+============================ */
+
+/* Botón principal "Ver más" (amarillo limpio) */
+.btn-fun-primary {
+  background-color: #FFD460;
+  border-color: #FFD460;
+  color: #1C1C1C;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-fun-primary:hover {
+  background-color: #ffcd33;
+  border-color: #ffcd33;
+  color: #1C1C1C;
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* Botón amarillo de promoción */
+.btn-fun-promo {
+  background-color: #FFD460; 
+  border-color: #ffbb00;
+  color: #000000;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-fun-promo:hover {
+  background-color: #ffcd33;
+  border-color: #ffcd33;
+  color: #000000;
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* Estado activo (si lo sigues usando para filtros o tabs) */
+.btn-active {
+  background-color: #FFD460 !important;
+  border-color: #FFD460 !important;
+  color: #000 !important;
+  transform: scale(1.05);
+}
+
+/* ============================
+   PROMO ESPECIAL
+============================ */
+
+.promo-card {
+  background-color: #ffe9bbc8;  /* un amarillo pastel más suave */
+  border-color: #F1C96B;
+  position: relative;
+}
+
+.promo-badge {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  background-color: #FF6F61;   /* coral para destacar */
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  z-index: 2;
+}
+
+/* ===== Texto de dudas dentro de las cards ===== */
+.card-dudas {
+  color: #555;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.link-escribenos {
+  color: #FF6F61 !important;          /* coral */
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.link-escribenos:hover {
+  color: #e65a50 !important;
+  text-decoration-color: #e65a50;
+}
+
+/* ===== Enlace "Ver todos los productos" =====
+   (DEJADO IGUAL COMO PEDISTE)
+================================================ */
+.link-ver-productos {
+  display: inline-block;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  color: #ff8360;
+  text-decoration: none;
+  border-bottom: 2px solid rgba(255, 131, 96, 0.4);
+  padding-bottom: 2px;
+}
+
+.link-ver-productos:hover {
+  color: #e36947;
+  border-bottom-color: #e36947;
+}
+
+/* ===== Botón icono para agregar al carrito ===== */
+.btn-add-cart-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: #00B894;      /* turquesa consistente con promos */
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+
+.btn-add-cart-icon:hover {
+  background-color: #009f80;
+  transform: scale(1.12);
+  color: #fff;
+}
+
+/* Ícono */
+.btn-add-cart-icon i {
+  pointer-events: none; /* evita que el click se quede en el icono */
+}
+
+/* ============================
+   RESPONSIVE
+============================ */
+
+/* Tablet */
+@media (max-width: 992px) {
+  .carrusel-img {
+    height: 260px;
+  }
+}
+
+/* Móvil */
+@media (max-width: 576px) {
+  .carrusel-img {
+    height: 200px;
+  }
+
+  .destino-card img,
+  .promo-card img {
+    height: 150px;
+  }
+}
+
+

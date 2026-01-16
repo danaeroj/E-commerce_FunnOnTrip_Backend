@@ -1,0 +1,266 @@
+/* ========= CONTENEDOR GENERAL ========= */
+.pago {
+  width: 100%;
+  font-family: "Inter", sans-serif;
+}
+
+/* Caja blanca centrada */
+.pago-box {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2rem 2.5rem;
+  max-width: 800px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* ========= TARJETA DEL VIAJE ========= */
+.pago__container-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  background: #f8f8f8;
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.pago__container-card img {
+  max-width: 260px;
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.pago__container-card h2 {
+  font-size: 2rem;
+  margin-bottom: 0.4rem;
+}
+
+.pago__container-card p,
+.pago__container-card h4 {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 0.2rem;
+}
+
+.pago__container-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.4rem;
+}
+
+/* ========= FORMULARIO ========= */
+.pago__form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* Grid de 2 columnas para los primeros campos */
+.pago__form > div:first-child {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 1.6rem;
+  column-gap: 2.5rem;
+}
+
+.pago__form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.95rem;
+  font-weight: 600;
+  gap: 0.4rem;
+}
+
+.pago__form input {
+  padding: 0.9rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  width: 100%;
+  background: #fdfdfd;
+}
+
+/* Quitar flechas en Chrome, Safari, Edge y Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Quitar flechas en Firefox */
+input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+
+
+
+/* ========= BOTONES DE MÉTODO DE PAGO ========= */
+.pago__container-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  margin: 2rem 0 1.5rem;
+}
+
+.pago__container-buttons button {
+  flex: 1;
+  max-width: 260px;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  font-size: 0.95rem;
+  gap: 5px;
+  cursor: pointer;
+  padding: 0.8rem 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.pago__container-buttons button:hover {
+  transform: scale(1.05);
+  background-color: #ffe6a3;
+  border-color: #e4b024;
+}
+
+/* Íconos */
+.pago__icon-1 { width: 72px; }
+.pago__icon-2 { width: 137px; }
+.pago__icon-3 { width: 105px; }
+
+/* ========= FECHA Y CVV EN FILA ========= */
+.pago__container-date {
+  display: flex;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+/* ========= DETALLES DE COMPRA ========= */
+.pago__details {
+  font-size: 1rem;
+  color: #6f6f6f;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  border-bottom: 3px solid #6f6f6f;
+  padding-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+}
+
+.pago__details-text {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  color: #6f6f6f;
+}
+
+.pago__details-text h4 {
+  color: #000;
+}
+
+/* ========= BOTÓN PRINCIPAL ========= */
+.pago__button {
+  width: 100%;
+  border: none;
+  padding: 0.9rem 0;
+  font-size: 1.2rem;
+  color: #fff;
+  font-weight: 600;
+  background-color: #24ac2f;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pago__button:hover {
+  transform: scale(1.03);
+}
+
+/* ========= RESPONSIVE ========= */
+
+/* Tablets */
+@media (max-width: 960px) {
+  .pago-box {
+    padding: 1.5rem;
+  }
+
+  .pago__container-card img {
+    max-width: 220px;
+    height: 120px;
+  }
+
+  .pago__container-card h2 {
+    font-size: 1.6rem;
+  }
+
+  .pago__container-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .pago__form > div:first-child {
+    column-gap: 1.5rem;
+  }
+}
+
+/* Móviles medianos */
+@media (max-width: 790px) {
+  .pago-box {
+    padding: 1.25rem;
+  }
+
+  .pago__container-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .pago__container-card img {
+    max-width: 100%;
+    height: 150px;
+  }
+
+  .pago__form > div:first-child {
+    grid-template-columns: 1fr; /* una sola columna */
+    row-gap: 1.2rem;
+  }
+
+  .pago__container-buttons {
+    flex-direction: column;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .pago__container-buttons button {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .pago__container-date {
+    flex-direction: column;
+  }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+  .pago-box {
+    padding: 1rem;
+  }
+
+  .pago__details,
+  .pago__details-text {
+    font-size: 0.9rem;
+  }
+
+  .pago__button {
+    font-size: 1rem;
+    padding: 0.8rem 0;
+  }
+}

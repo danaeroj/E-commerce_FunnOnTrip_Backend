@@ -1,0 +1,113 @@
+.btn {
+  background-color: #FEC74A !important;   /* Amarillo dorado */
+  border: 2px solid #e5a309 !important;    /* Borde más oscuro */
+  color: #000 !important;                  /* Texto negro */
+  font-weight: 700;
+  padding: 0.75rem 1.3rem;
+  border-radius: 8px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Hover */
+.btn:hover {
+  background-color: #e5a309 !important;   /* Dorado más fuerte */
+  color: #000 !important;
+}
+
+.contact-card {
+  background: #ffffff;
+  border-radius: 28px;        /* Bordes grandes y suaves */
+  padding: 3rem;              /* Espacio interior amplio */
+  box-shadow: 0px 12px 35px rgba(0, 0, 0, 0.08); /* Sombra suave */
+  max-width: 1200px;
+  margin: 0 auto;             /* Centrada dentro del container */
+}
+
+.contact-card input,
+.contact-card textarea {
+  border-radius: 12px !important;
+  padding: 12px !important;
+  font-size: 1rem;
+}
+
+.contact-card h2 {
+  font-weight: 800;
+  text-align: center;
+}
+
+.contact-card .divider {
+  border-left: 1px solid #ddd;
+  height: 100%;
+}
+
+
+/* ============================
+   RESPONSIVE
+============================ */
+
+/* Tablets y pantallas medianas (≤ 992px) */
+@media (max-width: 991.98px) {
+  .contact-card {
+    padding: 2.5rem 2rem;  /* un poco menos de padding lateral */
+    border-radius: 24px;
+  }
+
+  .contact-card h2 {
+    font-size: 1.6rem;
+  }
+
+  .contact-card p {
+    font-size: 0.98rem;
+  }
+}
+
+/* Móviles (≤ 768px) */
+@media (max-width: 767.98px) {
+  .main.container {
+    margin-top: 2rem !important;   /* menos margen superior en móvil */
+  }
+
+  .contact-card {
+    padding: 2rem 1.5rem;          /* más compacto */
+    border-radius: 22px;
+  }
+
+  .contact-card input,
+  .contact-card textarea {
+    font-size: 0.95rem;
+    padding: 10px !important;
+  }
+
+  .btn-guardar {
+    width: 100%;                  /* botón full width en móvil */
+    text-align: center;
+  }
+}
+
+/* Móviles pequeños (≤ 576px) */
+@media (max-width: 575.98px) {
+
+  .contact-card {
+    padding: 1.8rem 1.25rem;
+    border-radius: 20px;
+    align-self: center;
+  }
+
+  .contact-card h2 {
+    font-size: 1.4rem;
+  }
+
+  .contact-card p {
+    font-size: 0.9rem;
+  }
+
+  #formProducto .col-12,
+  #formProducto .col-12.col-md-6,
+  #formProducto .col-12.col-md-3,
+  #formProducto .col-12.col-md-4,
+  #formProducto .col-12.col-md-8 {
+    /* Fuerza que cada campo ocupe todo el ancho en móvil */
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}

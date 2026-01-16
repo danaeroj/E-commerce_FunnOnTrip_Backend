@@ -1,0 +1,980 @@
+/* =========================================
+   LAYOUT GENERAL / TIPOGRAFÍA
+========================================= */
+
+#contenido-principal {
+  max-width: 1100px;
+}
+
+/* Puntito verde estilo "notificación" 
+.cart-has-items {
+  position: relative;
+}
+
+.cart-has-items::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 20px;
+  height: 20px;
+  background: #47d662;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+*/
+
+main {
+  margin: 80px;
+}
+
+:root {
+  --mf-gap: 16px;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  /* Este padding-top se recalcula con JS según la altura real del header insertado */
+  padding-top: 0;
+ /* font-family: "Montserrat Alternates", system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", "Noto Sans", "Liberation Sans", sans-serif;*/
+  background: #fff;
+}
+
+main {
+  padding: 24px 16px;
+}
+
+/* =========================================
+   RESUMEN DEL PEDIDO (carrito.html)
+========================================= */
+
+.resumen-card {
+  background: #f8f8f8;
+  border-radius: 20px;
+}
+
+.btn-warning-pago {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  margin: auto;
+  width: 40%;
+  background-color: #ffd275 !important;
+  color: #000 !important;
+  border: 2px solid #ffd275 !important;
+  border-radius: 6px !important;
+  font-weight: 600;
+  padding: 0.8rem 1.2rem;
+  cursor: pointer;
+ 
+  transition: all 0.2s ease-in-out;
+
+}
+.btn-warning-pago:hover {
+  transform: scale(1.01);
+
+  border: 2px solid #ffd275 !important;
+  color: #000000 !important;
+  background-color: #ffd275 !important;
+}
+
+/* =========================================
+   BOTONES DE PAGO / ACCIONES (COMPARTIDO)
+========================================= */
+
+
+
+/* BOTÓN PAGO (versión carrito flotante) - DUPLICADO / OVERRIDE */
+.btn-warning {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  margin: auto;
+  width: 40%;
+  background-color: #ffd275 !important;
+  color: #000 !important;
+  border: 2px solid #ffd275 !important;
+  border-radius: 6px !important;
+  font-weight: 600;
+  padding: 0.8rem 1.2rem;
+  cursor: pointer;
+   transition: all 0.2s ease-in-out;
+
+  }
+
+.btn-warning:hover {
+  transform: scale(1.01);
+
+  border: 2px solid #ffd275 !important;
+  color: #000000 !important;
+  background-color: #ffd275 !important;
+}
+
+/* BOTÓN VER CARRITO / SEGUIR COMPRANDO (flotante) */
+.btn-success {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  margin: auto;
+  width: 40%;
+  background-color: #53b1a9 !important;
+  color: #000 !important;
+  border: 2px solid #56b3ac !important;
+  border-radius: 6px !important;
+  font-weight: 600;
+  padding: 0.8rem 1.2rem;
+  cursor: pointer;
+   transition: all 0.2s ease-in-out;
+}
+
+.btn-success:hover {
+  transform: scale(1.01);
+ 
+  border: 2px solid #56b3ac !important;
+  color: #000000 !important;
+}
+
+
+
+/* =========================================
+   TARJETA DE VIAJE (carrito.html)
+========================================= */
+
+.viaje {
+  background: #f8f8f8;
+  /* off-white bonito */
+  border-radius: 16px;
+  border: 1px solid #ddd;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.viaje:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.viaje-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.viaje-body {
+  padding: 1rem;
+}
+
+.viaje-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+}
+
+.viaje-price {
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 0.5rem;
+}
+
+.viaje-actions {
+  margin-top: 0.5rem;
+}
+
+
+
+/* =========================================
+   CERRAR PANEL (X) CARRITO FLOTANTE
+========================================= */
+
+#cart-panel .cart-close {
+  width: 10%;
+  background-color: #ff0000 !important;
+  color: #000 !important;
+  border: 2px solid #a11d1d !important;
+  border-radius: 6px !important;
+}
+
+#cart-panel .cart-close:hover {
+  transform: scale(1.01);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+  border: 2px solid #fd0909 !important;
+}
+
+
+/* =========================================
+   TABLA DEL CARRITO (COMPARTIDO)
+========================================= */
+
+.container-shopping-cart-float {
+  background-color: #00000000 !important;
+
+  overflow: visible;
+  position: static;
+  bottom: 16px;
+  right: 16px;
+  z-index: 1000;
+  /* IMPORTANTÍSIMO: que NO recorte el contenido interno */
+  overflow: visible;
+
+}
+
+/* Fondo sólido */
+#cart-panel table {
+  background: #ffffff;
+  border-radius: 10px;
+  width: 80%;
+  border-collapse: collapse;
+  overflow: hidden;
+}
+
+/* Encabezado */
+#cart-panel thead tr {
+  background: #5dc1b9;
+  /* verde FunOnTrip */
+  color: #ffffff;
+  font-weight: 900;
+}
+
+#cart-panel thead th {
+  padding: 10px 8px;
+  font-size: 0.85rem;
+  text-transform: capitalize;
+  border-bottom: 2px solid #56b3ac;
+}
+
+/* Celdas */
+#cart-panel tbody td {
+  padding: 10px 8px;
+  font-size: 0.85rem;
+  color: #333;
+  border-bottom: 1px solid #e7e7e7;
+  background: #ffffff;
+}
+
+/* Alternancia sutil */
+#cart-panel tbody tr:nth-child(even) td {
+  background: #f6fdfc;
+  /* verde MUY suave */
+}
+
+/* Inputs */
+#cart-panel input.quantity {
+  width: 40px;
+  padding: 4px;
+  border: 1px solid #c3eae5;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  background: #ffffff;
+}
+
+/* Botón eliminar productos.html */
+#cart-panel .btn-danger {
+  background: #ff8360 !important;
+  /* naranja FunOnTrip */
+  border: none !important;
+  font-size: 0.75rem;
+  padding: 3px 8px !important;
+  color: rgb(0, 0, 0) !important;
+  border-radius: 6px;
+}
+
+/* Botón eliminar - compatible con carrito flotante y carrito.html (DUPLICADO) */
+#cart-panel .btn-danger,
+.cart-table .btn-danger {
+  background: #ff8360 !important;
+  /* naranja FunOnTrip */
+  border: none !important;
+  font-size: 0.75rem;
+  padding: 3px 8px !important;
+  color: rgb(0, 0, 0) !important;
+  border-radius: 6px;
+}
+
+#cart-panel .btn-danger:hover,
+.cart-table .btn-danger:hover {
+  background: #e57455 !important;
+  color: #000 !important;
+}
+
+/* =========================================
+   PANEL FLOTANTE DEL CARRITO (PRODUCTOS)
+========================================= */
+
+
+/* PANEL FLOTANTE DEL CARRITO */
+#cart-panel {
+  position: fixed;
+  top: 170px;
+  /* debajo del botón */
+  right: 40px;
+  /* más separado del borde */
+  left: auto;
+  /* aseguramos que no haya conflicto */
+  bottom: auto;
+  /* quitamos el “pegado abajo” */
+
+  width: min(320px, 90vw);
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+  z-index: 2100;
+
+  display: none;
+  /* el JS lo cambia a block */
+  flex-direction: column;
+  max-height: calc(100vh - 150px);
+  overflow: hidden;
+}
+
+
+#cart-icon.toggle-cart-btn {
+  top: 130px;
+  right: 40px;
+}
+
+/*========================================
+   correcciones taba carrito botones (productos.html)
+   ========================================= */
+.cart-summary {
+  background: #ffffff;
+  /* fondo blanco (o crema suave) */
+  padding: 1rem 1.5rem;
+  border-top: 2px solid #e6e6e6;
+  /* separador visual */
+  border-radius: 0 0 14px 14px;
+  /* redondeo solo abajo */
+}
+
+
+.cart-summary-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.cart-summary-buttons a,
+.cart-summary-buttons button {
+  flex: 1;
+  /* ambos del mismo ancho */
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+
+
+.cart-drag-handle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  background: #5dc1b9;
+  color: #ffffff;
+  border-bottom: 1px solid #e9efb8;
+  user-select: none;
+}
+
+.cart-body {
+  padding: 10px 12px;
+  overflow-y: auto;
+  max-height: calc(72vh - 120px);
+  background: #ffffff;
+}
+
+#cart-panel .cart-header {
+  padding: 10px 12px 12px;
+  border-top: 1px solid #eee;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  background: #ffffff;
+}
+
+#cart-panel .cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+}
+
+#cart-panel .cart-table thead tr {
+  background: #5dc1b9;
+  color: #ffffff;
+}
+
+#cart-panel .cart-table thead th {
+  padding: 8px 6px;
+  font-size: 0.82rem;
+}
+
+#cart-panel .cart-table tbody td {
+  padding: 8px 6px;
+  font-size: 0.82rem;
+  border-bottom: 1px solid #e6e6e6;
+  background: #ffffff;
+}
+
+#cart-panel .cart-table tbody tr:nth-child(even) td {
+  background: #f6fdfc;
+}
+
+#cart-panel .cart-table input.quantity {
+  width: 52px;
+  padding: 3px 4px;
+  border-radius: 6px;
+  border: 1px solid #c3eae5;
+  font-size: 0.8rem;
+}
+
+
+
+/* Cuerpo del carrito (scroll) */
+#cart-panel .cart-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 16px 24px 16px;
+  /* espacio para que no choque con el header */
+}
+
+/* header siempre visible */
+#cart-panel .cart-header {
+  flex-shrink: 0;
+  padding: 8px 16px 12px 16px;
+  background-color: #fff;
+  border-top: 1px solid #eee;
+}
+
+/* Botones del header */
+#cart-panel .btn-pago,
+#cart-panel .btn-shop,
+#cart-panel .btn-pago-carrito {
+  width: 48%;
+  max-width: 180px;
+}
+
+/* --- Tabla responsiva para móvil --- */
+.carrito-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+
+/* =========================================
+   ICONO CARRITO (productos.html)
+   ========================================= */
+
+#cart-icon.toggle-cart-btn {
+  position: fixed;
+  top: 120px;
+  /* ← AJUSTA la altura: más abajo */
+  right: 16px;
+  /* pegado a la derecha */
+  z-index: 2200;
+
+  background-color: #FEC74A;
+  color: #000;
+  border: none;
+
+  /* Tamaño igual que el botón de filtros */
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1rem;
+  cursor: pointer;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+#cart-icon.toggle-cart-btn:hover {
+  background-color: #ffbe3b;
+  transform: scale(1.1);
+}
+
+
+/* ==========================================================
+   CARRITO FLOTANTE — PANTALLAS PEQUEÑAS (≤ 576px)
+========================================================== */
+@media (max-width: 576px) {
+
+  /* ==============================
+     1) TABLA RESPONSIVE EN MÓVIL
+     ============================== */
+
+  .cart-table thead {
+    display: none;
+    /* Ocultamos encabezados */
+  }
+
+  .cart-table tr {
+    display: block;
+    margin-bottom: 14px;
+    padding: 12px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    background: #fff;
+  }
+
+  .cart-table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 0.9rem;
+  }
+
+  .cart-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: #444;
+  }
+
+  .cart-table input.quantity {
+    width: 60px;
+    padding: 4px;
+  }
+
+  .cart-table .btn-danger {
+    width: auto;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+
+  /* =====================================
+     2) BOTONES DE PAGO / IR AL CARRITO
+     (versión móvil básica)
+     ===================================== */
+     @media (max-width: 576px) {
+
+ /* Botones en móvil: más compactos pero siguen lado a lado */
+  .cart-summary-buttons .btn-warning,
+  .cart-summary-buttons .btn-success {
+    width: 50%;
+    padding: 0.55rem 0.4rem;
+    font-size: 0.85rem;
+        white-space: nowrap;
+       
+  }
+
+  /* Ocultar texto largo y reemplazarlo por corto */
+  #checkout-btn .btn-text {
+    display: none;
+  }
+
+  #checkout-btn::after {
+    content: "Pagar";
+    font-weight: 700;
+     align-items: center;
+        justify-content: center;
+        text-align: center;
+  }
+
+  #go-to-cart .btn-text {
+    display: none;
+  }
+
+  #go-to-cart::after {
+    content: "Carrito";
+    font-weight: 700;
+     align-items: center;
+        justify-content: center;
+        text-align: center;
+  }
+
+  /* Espacio inferior para que no se vea cortado */
+  .cart-summary {
+    padding-bottom: 1rem;
+  }
+}
+
+
+
+.btn-warning {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  
+  width: 50%;
+  background-color: #ffd275 !important;
+  color: #000 !important;
+  border: 2px solid #ffd275 !important;
+  border-radius: 6px !important;
+  font-weight: 600;
+  padding: 0.8rem 1.2rem;
+  cursor: pointer;
+   transition: all 0.2s ease-in-out;
+
+  }
+
+.btn-warning:hover {
+  transform: scale(1.01);
+
+  border: 2px solid #ffd275 !important;
+  color: #000000 !important;
+  background-color: #ffd275 !important;
+}
+
+/* BOTÓN VER CARRITO / SEGUIR COMPRANDO (flotante) */
+.btn-success {
+  margin-top: 12px;
+  margin-bottom: 12px;
+ 
+  width: 50%;
+  background-color: #53b1a9 !important;
+  color: #000 !important;
+  border: 2px solid #56b3ac !important;
+  border-radius: 6px !important;
+  font-weight: 600;
+  padding: 0.8rem 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-success:hover {
+  transform: scale(1.01);
+ 
+  border: 2px solid #56b3ac !important;
+  color: #000000 !important;
+}
+
+
+  /* =====================================
+     3) PANEL flotante base en móvil
+     (wrapper genérico .cart-float)
+     ===================================== */
+
+  .cart-float {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    top: 90px;
+    width: calc(100vw - 32px);
+    /* deja margen a los lados */
+  }
+
+
+  /* =====================================
+     4) PANEL #cart-panel (1ª definición)
+     ===================================== */
+
+  #cart-panel {
+    position: fixed;
+    top: 170px;
+    /* debajo del botón */
+    right: 30px;
+    /* separado del borde */
+    left: auto;
+    /* sin conflicto lateral */
+    bottom: auto;
+    /* no pegado abajo */
+    height: 100%;
+    width: min(320px, 90vw);
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+    z-index: 2100;
+    max-height: calc(100vh - 150px);
+    display: none;
+    /* se muestra con JS */
+    flex-direction: column;
+    /* header + body + footer */
+  }
+
+  /* Texto del total dentro del panel */
+  #cart-panel .cart-summary-total {
+    font-size: 0.9rem;
+    /* más chiquita */
+    font-weight: 600;
+  }
+
+
+  /* =====================================
+     5) BOTÓN flotante del carrito (#cart-icon)
+     ===================================== */
+
+  #cart-icon {
+    position: fixed;
+    bottom: 16px;
+    right: 24px;
+    z-index: 2200;
+    background: #fffdf7;
+    height: 38px;
+    width: 38px;
+    cursor: pointer;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+    transition: all 0.2s ease-in-out;
+  }
+
+  #cart-icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+  }
+
+  .cart-toggle-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+
+  /* =====================================
+     6) TIPOGRAFÍA dentro del panel
+     ===================================== */
+
+  /* Texto general más pequeño */
+  #cart-panel .cart-body,
+  #cart-panel .cart-table,
+  #cart-panel .cart-table thead th,
+  #cart-panel .cart-table tbody td,
+  #cart-panel table thead th,
+  #cart-panel table tbody td {
+    font-size: 0.78rem;
+  }
+
+  #cart-panel .cart-table td::before {
+    font-size: 0.8rem;
+  }
+
+  #cart-panel .cart-body {
+    padding: 8px 10px 16px 10px;
+  }
+
+  #cart-panel .cart-table input.quantity,
+  #cart-panel input.quantity {
+    font-size: 0.78rem;
+    padding: 2px 4px;
+    width: 50px;
+  }
+
+
+  /* =====================================
+     7) WRAPPER .container-shopping-cart-float
+     ===================================== */
+
+  .container-shopping-cart-float {
+    background-color: #00000000 !important;
+    position: fixed;
+    top: 5vh;
+    /* empieza cerca de arriba */
+    bottom: auto;
+    height: 50vh;
+    /* ocupa mitad de la pantalla */
+    left: 55%;
+    transform: translateX(-50%);
+    width: 92vw;
+    /* ancho responsivo */
+    max-width: 420px;
+    z-index: 1500;
+  }
+
+
+  /* =====================================
+     9) SCROLL del cuerpo del carrito
+     ===================================== */
+
+  /* Lista de productos con scroll */
+  #cart-panel .cart-body {
+    flex: 1;
+    overflow-y: auto;
+    max-height: calc(100% - 180px);
+    /* deja ~180px para header + footer + botones */
+  }
+
+
+  /* =====================================
+     10) HEADER del panel (botones arriba)
+     ===================================== */
+
+  #cart-panel .cart-header {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    /* separación entre elementos */
+    padding: 12px;
+  }
+
+  /* Botones del header más pequeños para que quepan */
+  #cart-panel .btn-pago,
+  #cart-panel .btn-shop,
+  #cart-panel .btn-pago-carrito {
+    width: 48% !important;
+    /* dos por fila */
+    margin: 2px !important;
+    display: block;
+    font-size: 0.85rem;
+    padding: 0.3rem 0.5rem;
+  }
+
+
+  /* =====================================
+     11) ESTILOS GENERALES DE BOTONES
+          (dentro del mismo media query)
+     ===================================== */
+
+  /* Versión general (móvil) */
+
+  /* Contenedor de botones abajo del carrito */
+  .cart-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-direction: row;
+      align-items: center;
+    height: 10vh;
+  }
+
+  .cart-floating {
+    width: 95vw;
+    /* que no se salga de la pantalla */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+
+}
+
+/* fin @media max-width: 576px */
+
+
+/* ==========================================================
+   ALINEAR ÍCONOS Y PANELES — TABLET Y ESCRITORIO (≥ 700px)
+   (en móvil se quedan las reglas que ya tienes)
+========================================================== */
+@media ( min-width: 576px) and (max-width: 855px) {
+
+  /* --- 1) ICONOS: filtros y carrito alineados --- */
+
+  /* botón de filtros (izquierda) */
+  .toggle-filtros-btn {
+    position: fixed;
+    top: 120px;              /* ALTURA COMÚN */
+    left: 20px;              /* pegado a la izquierda */
+    right: auto;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+  }
+
+  /* botón de carrito (derecha) */
+  #cart-icon.toggle-cart-btn {
+    position: fixed;
+    top: 120px;              /* MISMA ALTURA QUE FILTROS */
+    right: 20px;             /* pegado a la derecha */
+    left: auto;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2200;
+  }
+
+  /* --- 2) PANELES: se abren debajo de los botones --- */
+
+  /* panel de filtros: debajo del botón de filtros */
+  .container-filtro-float {
+    position: fixed;
+    top: 172px;              /* 120 (top) + 36 (alto botón) + 16px margen */
+    left: 20px;
+    transform: none;
+    max-width: 280px;
+    width: 280px;
+  }
+
+  /* panel del carrito: centrado y debajo del botón de carrito */
+  #cart-panel {
+    position: fixed;
+    top: 172px;              /* misma lógica: debajo del iconito */
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: min(720px, 90vw) !important; /* ancho grande tipo modal */
+    max-height: calc(100vh - 180px);
+    border-radius: 16px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+    z-index: 2100;
+  }
+}
+
+
+
+/* ==========================================================
+   CARRITO FLOTANTE — TABLET GRANDE Y ESCRITORIO
+   (entre 700px y 2000px aprox.)
+   Estilo ancho y centrado como en desktop
+========================================================== */
+@media (min-width: 856px) and (max-width: 3000px) {
+
+  /* Panel del carrito ancho y centrado */
+  #cart-panel {
+    position: fixed;
+    top: 120px;                       /* debajo del header / cerca del botón */
+    left: 50%;                        /* centrado horizontal */
+    right: auto;
+    transform: translateX(-50%);      /* lo centra respecto al 50% */
+
+    width: min(720px, 90vw);          /* ancho grande y cómodo */
+    max-height: calc(100vh - 140px);  /* deja aire arriba y abajo */
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+    z-index: 2100;
+    display: none;                    /* lo sigues controlando con JS */
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Cuerpo del carrito (scroll) */
+  #cart-panel .cart-body {
+    padding: 14px 18px;
+    font-size: 0.9rem;
+  }
+
+  /* Tabla del carrito */
+  #cart-panel .cart-table thead th,
+  #cart-panel .cart-table tbody td {
+    font-size: 0.9rem;
+    padding: 10px 8px;
+  }
+
+  #cart-panel .cart-table input.quantity {
+    font-size: 0.9rem;
+    width: 54px;
+    padding: 4px 6px;
+  }
+
+  /* Resumen inferior (total + botones) */
+  #cart-panel .cart-summary {
+    padding: 1rem 1.5rem;
+  }
+
+  #cart-panel .cart-summary-total {
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  #cart-panel .cart-summary-buttons a,
+  #cart-panel .cart-summary-buttons button {
+    font-size: 0.95rem;
+    padding: 0.7rem 1rem;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+}

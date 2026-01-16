@@ -1,0 +1,65 @@
+/* MODO OBSCURO */
+body.dark-mode .card,
+body.dark-mode .destino-card,
+body.dark-mode .promo-card {
+    background-color: #1e1e1e !important;
+    color: #f5f5f5 !important;
+    border: 1px solid #333 !important;
+}
+
+/* Títulos */
+body.dark-mode .card-title {
+    color: #ffffff !important;
+}
+
+/* Descripciones */
+body.dark-mode .card-text,
+body.dark-mode .card-price,
+body.dark-mode .card-dudas,
+body.dark-mode .badge {
+    color: #e0e0e0 !important;
+}
+
+/* Badge claro → oscuro */
+body.dark-mode .badge.text-bg-light {
+    background-color: #333 !important;
+    color: #fff !important;
+}
+
+/* Enlace "Escríbenos" */
+body.dark-mode .link-escribenos {
+    color: #66aaff !important;
+}
+
+/* ===BOTONES=== */
+
+/* Botón carrito */
+body.dark-mode .btn-add-cart-icon {
+    background-color: #333 !important;
+    color: #fff !important;
+    border: 1px solid #555 !important;
+}
+
+body.dark-mode .btn-add-cart-icon:hover {
+    background-color: #444 !important;
+}
+
+/* Botón azul "Ver más" */
+body.dark-mode .btn-fun-primary {
+    background-color: #2a71d0 !important;
+    color: #fff !important;
+    border-color: #1c4d8f !important;
+}
+
+/* Botón promoción  */
+body.dark-mode .btn-fun-promo {
+    background-color: #b85f00 !important;
+    color: #fff !important;
+    border-color: #8c4800 !important;
+}
+
+/* Imagenes suaves */
+body.dark-mode .card img {
+    filter: brightness(0.8);
+    transition: filter 0.3s;
+}

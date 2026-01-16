@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FunOnTrip - Home</title>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Iconos -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <!-- Google Fonts (Montserrat + Nunito Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Estilos del home -->
+    <link rel="stylesheet" href="./pages/otrocss/home.css" />
+  </head>
+
+  <body>
+    <!-- SECCIÓN HOME COMPLETA -->
+    <section class="site-home">
+      <!-- ==============================
+             HERO / CARRUSEL PRINCIPAL
+             (más adelante se llenará desde JSON / BD)
+        =============================== -->
+      <section class="container carrusel-section">
+        <h2 class="text-center mb-4">
+          Tu próxima <span> gran aventura</span> está a un clic de distancia
+        </h2>
+
+        <div id="homeCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <!-- TODO: reemplazar estos slides por data dinámica (JSON / BD) -->
+            <div class="carousel-item active">
+              <img
+                src="./images/inicio/carrucel/Disney.webp"
+                class="d-block w-100 carrusel-img"
+                alt="Disney"
+              />
+            </div>
+
+            <div class="carousel-item">
+              <img
+                src="./images/inicio/carrucel/Roma.webp"
+                class="d-block w-100 carrusel-img"
+                alt="Roma"
+              />
+            </div>
+
+            <div class="carousel-item">
+              <img
+                src="./images/inicio/carrucel/venecia.webp"
+                class="d-block w-100 carrusel-img"
+                alt="Venecia"
+              />
+            </div>
+
+            <div class="carousel-item">
+              <img
+                src="./images/inicio/carrucel/Santorini.webp"
+                class="d-block w-100 carrusel-img"
+                alt="Santorini"
+              />
+            </div>
+          </div>
+
+          <!-- Controles -->
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#homeCarousel"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon"></span>
+          </button>
+
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#homeCarousel"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon"></span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ==============================
+             VIAJES MÁS POPULARES
+             (más adelante: render dinámico con JSON / BD)
+        =============================== -->
+      <section class="container mt-5 mb-5">
+        <h2 class="mb-3">Viajes <span>populares</span> del mes</h2>
+
+        <div class="row g-4">
+          <!-- ====== JAPÓN ====== -->
+          <!-- TODO: este card se poblará desde la base de datos -->
+          <div class="card-sep col-12 col-sm-6 col-lg-3">
+            <div class="card destino-card h-100">
+              <img
+                src="./images/inicio/Japon.webp"
+                class="card-img-top"
+                alt="Japón"
+              />
+              <div class="card-body text-center">
+                <span class="badge text-bg-light mb-2">Internacional</span>
+                <h5 class="card-title">Japón Esencial</h5>
+                <p class="card-text small mb-2">7 días · Tokio &amp; Kioto</p>
+                <p class="card-price mb-2">
+                  Desde <strong>$32,500 MXN</strong>
+                </p>
+
+                <!-- Dudas / contacto -->
+                <p class="card-dudas small mb-3">
+                  ¿Tienes dudas?
+                  <a href="./contacto.html" class="link-escribenos"
+                    >Escríbenos</a
+                  >
+                </p>
+
+                <!-- Botones de acción -->
+                <div class="d-flex flex-row justify-content-center gap-2">
+                  <button
+                    class="btn btn-add-cart-icon"
+                    data-id="101"
+                    data-nombre="Japón Esencial"
+                    data-precio="32500"
+                    data-descripcion="7 días · Tokio & Kioto"
+                    data-imagen="./images/inicio/Japon.webp"
+                    title="Agregar al carrito"
+                  >
+                    <i class="fa-solid fa-cart-plus"></i>
+                  </button>
+
+                  <button
+                    class="btn btn-fun-primary"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#infoJapon"
+                  >
+                    Ver más
+                  </button>
+                </div>
+
+                <div class="collapse mt-3 text-start small" id="infoJapon">
+                  <ul class="list-unstyled mb-0">
+                    <li>• Vuelo redondo CDMX – Tokio</li>
+                    <li>• 6 noches de hotel 3★/4★</li>
+                    <li>• JR Pass 7 días</li>
+                    <li>• Tour guiado por Shibuya y Fushimi Inari</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ====== SAN MIGUEL ====== -->
+          <div class="card-sep col-12 col-sm-6 col-lg-3">
+            <div class="card destino-card h-100">
+              <img
+                src="./images/inicio/SanMiguel.webp"
+                class="card-img-top"
+                alt="San Miguel de Allende"
+              />
+              <div class="card-body text-center">
+                <span class="badge text-bg-light mb-2">Escapada México</span>
+                <h5 class="card-title">San Miguel Romántico</h5>
+                <p class="card-text small mb-2">3 días · Centro histórico</p>
+                <p class="card-price mb-2">Desde <strong>$4,800 MXN</strong></p>
+
+                <p class="card-dudas small mb-3">
+                  ¿Tienes dudas?
+                  <a href="./contacto.html" class="link-escribenos"
+                    >Escríbenos</a
+                  >
+                </p>
+
+                <div class="d-flex flex-row justify-content-center gap-2">
+                  <button
+                    class="btn btn-add-cart-icon"
+                    data-id="102"
+                    data-nombre="San Miguel Romántico"
+                    data-precio="4800"
+                    data-descripcion="3 días · Centro histórico"
+                    data-imagen="./images/inicio/SanMiguel.webp"
+                    title="Agregar al carrito"
+                  >
+                    <i class="fa-solid fa-cart-plus"></i>
+                  </button>
+
+                  <button
+                    class="btn btn-fun-primary"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#infoSMA"
+                  >
+                    Ver más
+                  </button>
+                </div>
+
+                <div class="collapse mt-3 text-start small" id="infoSMA">
+                  <ul class="list-unstyled mb-0">
+                    <li>• Transporte redondo CDMX – SMA</li>
+                    <li>• 2 noches de hotel boutique</li>
+                    <li>• City tour peatonal</li>
+                    <li>• Visita a viñedo y cata básica</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ====== PARÍS ====== -->
+          <div class="card-sep col-12 col-sm-6 col-lg-3">
+            <div class="card destino-card h-100">
+              <img
+                src="./images/inicio/Paris.webp"
+                class="card-img-top"
+                alt="París"
+              />
+              <div class="card-body text-center">
+                <span class="badge text-bg-light mb-2">Europa clásica</span>
+                <h5 class="card-title">París Iluminado</h5>
+                <p class="card-text small mb-2">5 días · Ciudad Luz</p>
+                <p class="card-price mb-2">
+                  Desde <strong>$27,900 MXN</strong>
+                </p>
+
+                <p class="card-dudas small mb-3">
+                  ¿Tienes dudas?
+                  <a href="./contacto.html" class="link-escribenos"
+                    >Escríbenos</a
+                  >
+                </p>
+
+                <div class="d-flex flex-row justify-content-center gap-2">
+                  <button
+                    class="btn btn-add-cart-icon"
+                    data-id="103"
+                    data-nombre="París Iluminado"
+                    data-precio="27900"
+                    data-descripcion="5 días · Ciudad Luz"
+                    data-imagen="./images/inicio/Paris.webp"
+                    title="Agregar al carrito"
+                  >
+                    <i class="fa-solid fa-cart-plus"></i>
+                  </button>
+
+                  <button
+                    class="btn btn-fun-primary"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#infoParis"
+                  >
+                    Ver más
+                  </button>
+                </div>
+
+                <div class="collapse mt-3 text-start small" id="infoParis">
+                  <ul class="list-unstyled mb-0">
+                    <li>• Vuelo redondo CDMX – París</li>
+                    <li>• 4 noches de hotel cerca del centro</li>
+                    <li>• Paseo en barco por el Sena</li>
+                    <li>• Entrada a Torre Eiffel (2do piso)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ====== PROMOCIÓN DEL MES: CANCÚN ====== -->
+          <div class="card-sep col-12 col-sm-6 col-lg-3">
+            <div class="card promo-card h-100">
+              <div class="promo-badge">Promoción del mes</div>
+              <img
+                src="./images/inicio/Cancun.webp"
+                class="card-img-top"
+                alt="Cancún"
+              />
+              <div class="card-body text-center">
+                <h5 class="card-title">Cancún All Inclusive</h5>
+                <p class="card-text small mb-2">4 días · Hotel frente al mar</p>
+                <p class="card-price mb-1">Desde <strong>$8,999 MXN</strong></p>
+                <p class="small text-success mb-3">
+                  Hasta <strong>30% de descuento</strong> saliendo en temporada
+                  baja.
+                </p>
+
+                <p class="card-dudas small mb-3">
+                  ¿Tienes dudas?
+                  <a href="./contacto.html" class="link-escribenos"
+                    >Escríbenos</a
+                  >
+                </p>
+
+                <div class="d-flex flex-row justify-content-center gap-2">
+                  <button
+                    class="btn btn-add-cart-icon"
+                    data-id="104"
+                    data-nombre="Cancún All Inclusive"
+                    data-precio="8999"
+                    data-descripcion="4 días · Hotel frente al mar"
+                    data-imagen="./images/inicio/Cancun.webp"
+                    title="Agregar al carrito"
+                  >
+                    <i class="fa-solid fa-cart-plus"></i>
+                  </button>
+                  <button
+                    class="btn btn-fun-promo"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#infoCancun"
+                  >
+                    Ver más
+                  </button>
+                </div>
+
+                <div class="collapse mt-3 text-start small" id="infoCancun">
+                  <ul class="list-unstyled mb-0">
+                    <li>• Vuelo redondo saliendo de CDMX</li>
+                    <li>• 3 noches hotel todo incluido</li>
+                    <li>• Traslados aeropuerto ↔ hotel</li>
+                    <li>• Tour a Isla Mujeres o Chichén Itzá</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Enlace para ver todos los productos -->
+        <div class="text-center mt-4">
+          <a href="./productos.html" class="link-ver-productos">
+            Ver todos los destinos
+          </a>
+        </div>
+      </section>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Cambia texto de los botones "Ver más / Ver menos" -->
+    <script src="./scripts/home.js"></script>
+
+    <!-- Includes generales (header/footer) -->
+    <script src="./scripts/main.js"></script>
+
+    <!-- Nueva función lógic de carrito en home-->
+    <script src="./scripts/home-cart.js"></script>
+  </body>
+</html>

@@ -1,0 +1,78 @@
+.register-container {
+  display: flex;
+}
+
+.register-box {
+  background: white;
+  padding: 3rem;
+  border-radius: 0 12px 12px 0;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  width: 50%;
+}
+
+.register-box h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+#form-registro {
+  input {
+    margin-bottom: 20px;
+  }
+}
+
+.image-section-register {
+  position: relative;
+  min-height: 600px;
+  background-image: url("../../images/Fondo-registro.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px 0 0 12px;
+}
+
+.password-container {
+  position: relative;
+}
+
+.password-container input {
+  width: 100%;
+  padding-right: 40px; /* espacio para el ícono */
+}
+
+.password-container .toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 35%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #666;
+}
+
+
+@media (max-width: 994px) {
+  /* Es crucial que esta clase apunte al contenedor de la imagen de Registro */
+  .image-section-register {
+    display: none !important; /* Asegura que la imagen de Registro se oculte */
+  }
+
+  /* Ajustar el padding en el formulario */
+  .login-form-section {
+    /* Aplica esta clase también al .register-box */
+    padding: 40px 30px;
+  }
+
+  /* Asegurar que el formulario de Registro ocupe todo el ancho */
+  .register-box {
+    width: 100% !important;
+    border-radius: 12px; /* Redondear todas las esquinas al ocultar la imagen */
+  }
+
+  .login-form-section h1 {
+    font-size: 2rem;
+  }
+}

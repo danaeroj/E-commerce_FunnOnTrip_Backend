@@ -1,0 +1,13 @@
+@import url("./header.css");
+@import url("./footer.css");
+@import url("../aboutStyles/agencia.css");
+@import url("../aboutStyles/valores.css");
+@import url("../aboutStyles/teamCards.css");
+@import url("../otrocss/contact.css");
+@import url("../otrocss/productos.css");
+@import url("../otrocss/carrito.css");
+@import url("../global.css");
+@import url("../pago/pago.css");
+@import url("../otrocss/home.css");
+@import url("./login.css");
+@import url("./registro.css");

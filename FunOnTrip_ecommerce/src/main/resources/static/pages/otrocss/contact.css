@@ -1,0 +1,310 @@
+
+.contacto {
+  padding-top: 50px !important;
+  width: 100%;
+}
+
+.contacto__container {
+  padding-right: 15px;
+}
+
+
+.contacto__title {
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 43px;
+}
+
+.contacto__container-img img {
+  max-width: 100%;
+  border-radius: 24px;
+}
+
+.contacto__form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 315px;
+  width: 100%;
+  font-family: "Inter", sans-serif;
+
+  input {
+    color: #9e9e9e;
+    max-width: 315px;
+    padding: 13px 19px;
+    border-radius: 15px;
+    border: #9e9e9e 1px solid;
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    font-size: 19px;
+    font-weight: 600;
+    gap: 7px;
+  }
+
+  textarea {
+    color: #9e9e9e;
+    max-width: 315px;
+    height: 100px;
+    padding: 13px 19px;
+    border-radius: 15px;
+    border: #9e9e9e 1px solid;
+  }
+
+  button {
+    width: 100px;
+    padding: 12px 30px;
+    border-radius: 18px;
+    margin: auto;
+    border: none;
+    background-color: #fec74a;
+    font-weight: 600;
+    cursor: pointer;
+    border: transparent 2px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.contacto__icon {
+  width: 39px;
+}
+
+.contacto__container-info {
+  margin-left: 14px;
+  height: 50px;
+  font-family: "Inter";
+  justify-content: space-between;
+  display: flex;
+  justify-content: flex-start;
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  div > h2 {
+    font-size: 16px;
+    color: #3c3c3c;
+  }
+
+  div > p {
+    font-size: 16px;
+    color: #828282;
+  }
+}
+.contacto__container-sections {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 250px;
+  gap: 30px;
+  padding-right: 10px;
+  box-sizing: border-box;
+}
+
+.email-text {
+  word-break: break-all;
+}
+/* Caja blanca general del contacto */
+
+.box-contact {
+  background-color: #fff;
+  border-radius: 24px;
+  padding: 40px 40px 50px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  max-width: 1100px;
+  margin: 0 auto 60px;
+}
+
+/* Formulario + info dentro de la col-8 */
+.contacto__container-form {
+  display: flex;
+  flex-wrap: wrap;        /* para que no se desborde */
+  gap: 32px;
+}
+
+/* Formulario: que ocupe una “mitad” flexible */
+.contacto__form {
+  flex: 1 1 260px;        /* crece y encoge dentro de la col-8 */
+  max-width: 420px;
+}
+
+/* Bloque de info: que ocupe la otra parte, pero sin salirse */
+.contacto__container-sections {
+  flex: 1 1 220px;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+.btn-contacto {
+  display: inline-block;
+  min-width: 180px;   /* para que no “salte” al cambiar de texto */
+  padding: 12px 40px;
+  border-radius: 18px;
+  border: none;
+  background-color: #fec74a;
+  font-weight: 600;
+  font-family: "Inter", sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-contacto:hover:enabled {
+  transform: scale(1.05);
+}
+
+
+/* Botón grande y ANCHO completo */
+.btn-contacto-enviar {
+  display: block;
+  width: 60% !important;               /* ahora ocupa todo el ancho del form */
+  max-width: 420px;          /* no se deforma en pantallas grandes */
+  margin: 25px auto 0;       /* centrado */
+  padding: 16px 0;           /* más alto */
+  
+  background-color: #fec74a;
+  border: none;
+  border-radius: 18px;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  color: #000;
+  cursor: pointer;
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+
+.btn-contacto-enviar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+
+/* ===== Ajustes para la alerta de estado del envío ===== */
+#estado-envio .alert {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Quitar estilos de botón amarillo a la X de cerrar */
+#estado-envio .btn-close {
+  width: auto;
+  height: auto;
+  padding: 0.4rem;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+
+/* Contenedor icono + texto */
+.contacto__container-info {
+  display: flex;
+  align-items: flex-start;      /* Alinear icono con inicio del texto */
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+/* Columna de texto */
+.contacto__container-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+/* Evitar márgenes raros */
+.contacto__container-text h2,
+.contacto__container-text p {
+  margin: 0;
+  padding: 0;
+}
+
+/* Centrar toda la columna en la grid */
+.contacto__container-sections {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* ================================
+   LÍNEA ENTRE FORM + INFO  (DESKTOP)
+   ================================ */
+@media (min-width: 992px) {
+  .contacto__container.col-lg-8 {
+    position: relative;
+  }
+
+  .contacto__container.col-lg-8::after {
+    content: "";
+    position: absolute;
+    right: 20px;          /* distancia hacia la imagen */
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background-color: #e0e0e0;
+    border-radius: 2px;
+  }
+}
+
+/* ================================
+   TABLET Y CEL ( < 992px )
+   - Sin imagen
+   - Sin línea divisora
+   - Form centrado
+   ================================ */
+@media (max-width: 991.98px) {
+
+  /* Un poco menos padding en la caja blanca */
+  .box-contact {
+    padding: 25px 20px;
+  }
+
+  /* Ocultar la columna de la imagen en SM y MD */
+  .contacto__container.col-lg-4 {
+    display: none !important;
+  }
+
+  /* Quitar la línea divisora cuando ya no hay imagen */
+  .contacto__container.col-lg-8::after {
+    content: none;
+  }
+
+  /* Form centrado y un poco más ancho */
+  .contacto__form {
+    max-width: 470px;
+    width: 100%;
+    margin: 0 auto 25px;
+  }
+
+  /* Info de contacto debajo del form */
+  .contacto__container-sections {
+    margin-top: 20px;
+    align-items: flex-start;
+  }
+}
+
+/* ================================
+   EXTRA PEQUEÑAS (CEL CHICO)
+   ================================ */
+@media (max-width: 576px) {
+  .box-contact {
+    padding: 20px 15px;
+  }
+
+  .contacto__form {
+    max-width: 100%;
+  }
+}

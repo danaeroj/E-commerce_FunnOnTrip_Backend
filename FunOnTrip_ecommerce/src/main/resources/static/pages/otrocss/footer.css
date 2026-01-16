@@ -1,0 +1,188 @@
+
+
+/* Que html y body ocupen toda la altura de la ventana */
+html, body {
+  height: 100%;
+}
+
+/* Hacemos que el body sea un contenedor flex vertical */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* El contenido del carrito debe ocupar el espacio disponible */
+main {
+  flex: 1;
+}
+
+/* El header no se estira */
+#site-header {
+  flex-shrink: 0;
+}
+
+/* La sección principal crece para llenar el espacio */
+.contacto {
+  flex: 1 0 auto;   /* hace que empuje al footer hacia abajo */
+}
+
+/* El contenedor del footer siempre va al final */
+#site-footer {
+  flex-shrink: 0;
+  margin-top: auto;  /* esta línea lo “pega” al final cuando hay poco contenido */  
+  flex-shrink: 0;
+}
+
+
+/* CONTENEDOR GENERAL */
+.footer-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 1rem;
+}
+
+/* LOGO */
+.logo {
+  width: 45px;
+}
+
+/* LOGO CON TEXTO DEBAJO */
+.footer-logo {
+  display: flex;
+  flex-direction: column;   /* << PONE EL TEXTO DEBAJO */
+  align-items: center;       /* << CENTRA */
+  justify-content: center;
+  gap: 3px;
+  text-decoration: none !important;
+  color: #000 !important;
+  font-family: var(--fontTitle);
+  white-space: nowrap;       /* evita saltos raros */
+}
+
+/* Ajustes del logo */
+.logo {
+  width: 50px;
+  height: auto;
+  display: block;
+}
+
+/* Texto debajo */
+.brand-text {
+  font-size: 1rem;
+  margin-top: 2px;
+}
+
+/* TEXTO FunOnTrip */
+.brand-text {
+  font-size: 1.2rem;
+  white-space: nowrap; /* evita que salte de línea */
+}
+
+/* BLOQUE CONTACTO */
+.footer-contact-icon {
+  text-align: center;
+  min-width: 90px;
+}
+
+.footer-contact-icon p {
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.email-icon-link i {
+  color: #000;
+  transition: 0.2s ease-in-out;
+  
+}
+
+.email-icon-link i:hover {
+  color: var(--secondaryColor);
+}
+
+.footer-contact-icon p {
+  font-size: 0.85rem;
+  margin: 0;
+  transition: 0.2s ease-in-out;
+}
+
+.footer-contact-icon p:hover {
+  color: var(--secondaryColor);
+}
+
+/* REDES */
+.footer-icons i {
+  transition: 0.2s ease-in-out;
+}
+
+.footer-icons i:hover {
+  color: var(--secondaryColor);
+}
+
+.footer-copy {
+  background-color: #e6e6e6 !important;  /* << fuerza el gris */
+  padding: 0.7rem 1rem;
+  font-size: 0.85rem;
+  
+}
+
+.footer-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
+
+/* Footer full width */
+.site-footer {
+  width: 100%;
+}
+
+.contactanos {
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  transition: 0.2s ease-in-out;
+}
+
+.contactanos:hover {
+  color: var(--secondaryColor) !important;
+}
+  
+
+@media (min-width: 768px) {
+  .footer-logo {
+    flex-direction: row;
+    gap: 10px;
+  }
+}
+
+
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .brand-text {
+    font-size: 1rem;
+  }
+
+  .logo {
+    width: 35px;
+  }
+
+  .footer-contact-icon p {
+    font-size: 0.75rem;
+  }
+
+  .footer-slogan {
+    display: none;
+  }
+
+  .footer-container > * {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+

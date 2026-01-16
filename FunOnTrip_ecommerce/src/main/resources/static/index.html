@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <!-- Configura el conjunto de caracteres -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Hace la página responsive -->
+  <title>FunOnTrip</title>
+  <!-- Título que aparece en la pestaña -->
+
+  <!-- Carga anticipada de fuentes de Google para mejorar rendimiento -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:ital,opsz,wght@0,14..32,800;1,14..32,800&family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
+    rel="stylesheet" />
+  <!-- Varias familias tipográficas -->
+
+  <!-- CSS de Bootstrap y FontAwesome para estilos y íconos -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Icono que aparece en la pestaña (favicon) -->
+  <link rel="icon" type="image/jpg" href="./images/funOnLog.png" />
+
+  <!-- Archivo CSS principal del sitio -->
+  <link rel="stylesheet" href="./pages/otrocss/style.css" />
+  <link rel="stylesheet" href="./pages/otrocss/header.css" />
+  <link rel="stylesheet" href="./pages/global.css" />
+</head>
+
+<body>
+  <section>
+    <!-- Header reutilizable -->
+    <div id="site-header"></div>
+  </section>
+
+  <!-- Main principal del sitio -->
+  <main id="contenido-principal" aria-labelledby="titulo-home" class="main container mt-5">
+    <!-- Sección dinámica: Productos y promociones -->
+    <div id="site-home"></div>
+  </main>
+
+  <!-- Contenedor donde se insertará el footer mediante JS -->
+  <div id="site-footer"></div>
+
+  <!-- Script de Bootstrap para funcionalidad interactiva -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- llamado de scripts -->
+  <!-- Auth global (UNO SOLO) -->
+  <script src="./scripts/app-auth.js"></script>
+
+  <!-- Scripts propios de la página -->
+  <script src="./scripts/main.js"></script>
+  <script src="./scripts/home-cart.js"></script>
+
+
+</body>
+
+</html>

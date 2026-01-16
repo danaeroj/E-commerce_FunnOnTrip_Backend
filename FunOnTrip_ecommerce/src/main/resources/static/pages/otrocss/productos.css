@@ -1,0 +1,517 @@
+/* GRID GENERAL */
+
+#productos-nacionales,
+#productos-internacionales,
+#productos-petfriendly {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+
+
+/* CARD PRODUCTO */
+
+.producto-card {
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.producto-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+
+/* IMAGEN */
+
+.producto-img-wrapper {
+  width: 100%;
+  height: 210px;
+  overflow: hidden;
+}
+
+.producto-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: scale 0.4s ease;
+}
+
+.producto-card:hover .producto-img {
+  scale: 1.05;
+}
+
+
+/* CONTENIDO */
+
+.producto-content {
+  padding: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  flex-grow: 1;
+}
+
+
+/* Título */
+.producto-titulo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+  min-height: 45px;
+  /* Evita saltos bruscos entre cards */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* Descripción */
+.producto-descripcion {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+  min-height: 48px;
+  /* Mantiene alineación perfecta entre cards */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* Precio */
+.producto-precio {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #ffc04c;
+  margin: 0.5rem 0 1rem 0;
+}
+
+
+/* BOTÓN AGREGAR */
+
+.btn-agregar {
+  width: 100%;
+  background-color: #ffd275;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.25s;
+}
+
+.btn-agregar:hover {
+  background-color: #ffbe3b;
+}
+
+.btn-agregar i {
+  margin-right: 6px;
+}
+
+
+/* SPINNER Y MENSAJES */
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+.alert {
+  text-align: center;
+  font-size: 1rem;
+}
+
+
+/* ==== ESTILO GLOBAL PARA TODOS LOS BOTONES DE FILTRO ==== */
+.btn-filtro {
+  background-color: transparent;
+  border: 2px solid #FEC74A;
+  color: #000;
+  font-weight: 600;
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hover y activo igual */
+.btn-filtro:hover,
+.btn-filtro.active {
+  background-color: #FEC74A;
+  color: #000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/*panel filtro computadora*/
+.cart-header {
+  position: sticky;
+  top: 90px;
+  /* ajusta según tu header */
+  z-index: 1000;
+  background-color: #ffffff !important;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+
+/* ==== ESTILO GLOBAL PARA TODOS LOS BOTONES DE FILTRO ==== */
+.btn-filtro {
+  background-color: transparent;
+  border: 2px solid #FEC74A;
+  color: #000;
+  font-weight: 600;
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hover y activo igual */
+.btn-filtro:hover,
+.btn-filtro.active {
+  background-color: #FEC74A;
+  color: #000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/*panel filtro computadora (ESCRITORIO)*/
+.cart-header {
+  position: sticky;
+  top: 90px; /* ajusta según tu header */
+  z-index: 1000;
+  background-color: #ffffff !important;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+
+/* PANEL FLOTANTE DE FILTROS (estado base) */
+.container-filtro-float {
+  position: fixed;
+  top: 10vh;               /* se sobreescribe en móviles/tablet */
+  left: 0%;
+  z-index: 1050;
+  background-color: #ffffff !important;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+  max-width: 280px;
+}
+
+/* BOTÓN DE ÍCONO (oculto en escritorio) */
+.toggle-filtros-btn {
+  position: fixed;
+  top: 20vh;               /* se sobreescribe en móviles/tablet */
+  left: 65%;
+  z-index: 2000;
+  background-color: #FEC74A;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  display: none;           /* visible solo en media queries */
+}
+
+
+.linea-destino {
+  display: inline-block;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  color: #000000;
+  text-decoration: none;
+  border-bottom: 3px solid #FEC74A;
+  padding-bottom: 2px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+
+
+
+
+/* ---------- LÓGICA GENERAL PARA PANTALLAS < 1549px ----------
+   - El panel se oculta por defecto y se muestra con la clase .show
+   - El botón de filtros se vuelve flotante
+----------------------------------------------------------- */
+@media (max-width: 1549.98px) {
+
+  .container-filtro-float {
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    display: none;         /* oculto, se abre con .show */
+    width: 92vw;
+    max-width: 280px;
+  }
+
+  .container-filtro-float h5 {
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+
+  .container-filtro-float button {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+
+  .container-filtro-float p,
+  .container-filtro-float span,
+  .container-filtro-float label {
+    font-size: 0.8rem;
+  }
+
+  .toggle-filtros-btn {
+    display: flex;         /* aquí ya se hace visible el botón */
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+  }
+}
+
+/* cuando tiene la clase show, se muestra */
+.container-filtro-float.show {
+  display: block;
+}
+
+/* =============================
+   PANEL NORMAL — PANTALLAS MUY GRANDES
+   Se expande automáticamente en monitores amplios
+============================= */
+@media (min-width: 2100px) {
+  .cart-header {
+    max-width: 420px;          /* más ancho que el default */
+    padding: 1.5rem 2rem;      /* más respiración */
+    border-radius: 14px;
+    font-size: 1rem;           /* texto ligeramente más grande */
+    margin-top: 100px;
+  }
+
+  .cart-header .btn-filtro {
+    padding: 0.5rem 1rem;      /* botones más cómodos en desktop */
+    font-size: 0.95rem;
+  }
+}
+
+
+/* ==========================================================
+   FILTROS — MÓVIL CHICO (0 – 575.98px)
+========================================================== */
+@media (max-width: 575.98px) {
+
+  /* Botón flotante de filtros */
+  .toggle-filtros-btn {
+    position: fixed;
+    top: 165px;
+    left: 16px;
+    right: auto;
+    transform: none;
+
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #FEC74A;
+    border: none;
+    font-weight: 600;
+    color: #000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    z-index: 2000;
+  }
+
+  /* Panel: justo debajo del botón */
+  .container-filtro-float {
+    position: fixed;
+    top: 210px;                 /* 110 + 34 + margen */
+    left: 16px;
+    right: auto;
+    transform: none;
+
+    width: min(320px, 92vw);
+    max-height: 70vh;
+    overflow-y: auto;
+
+    background-color: #ffffff !important;
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+    z-index: 1050;
+  }
+}
+
+/* ==========================================================
+   FILTROS — MÓVIL GRANDE / TABLET CHICA (576 – 699.98px)
+========================================================== */
+@media (min-width: 576px) and (max-width: 699.98px) {
+
+  .toggle-filtros-btn {
+    position: fixed;
+    top: 320px;
+    left: 20px;
+    right: auto;
+    transform: none;
+
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #FEC74A;
+    border: none;
+    font-weight: 600;
+    color: #000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    z-index: 2000;
+  }
+
+  .container-filtro-float {
+    position: fixed;
+    top: 208px;                /* debajo del botón */
+    left: 20px;
+    right: auto;
+    transform: none;
+
+    width: min(460px, 92vw);
+    max-height: 105vh;
+    overflow-y: auto;
+display: none;
+    background-color: #ffffff !important;
+    padding: 1rem 1.2rem;
+    border-radius: 12px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+    z-index: 1050;
+  }
+}
+
+/* ==========================================================
+   FILTROS — TABLET (700 – 899.98px)
+========================================================== */
+@media (min-width: 700px) and (max-width: 899.98px) {
+
+  .toggle-filtros-btn {
+    position: fixed;
+    top: 120px;
+    left: 24px;
+    right: auto;
+    transform: none;
+
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #FEC74A;
+    border: none;
+    font-weight: 600;
+    color: #000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    z-index: 2000;
+  }
+
+  .container-filtro-float {
+    position: fixed;
+    top: 172px;                /* debajo del botón */
+    left: 24px;
+    right: auto;
+    transform: none;
+
+    width: min(420px, 85vw);   /* un poco más ancho en tablet */
+    max-height: 78vh;
+    overflow-y: auto;
+
+    background-color: #ffffff !important;
+    padding: 1.2rem 1.4rem;
+    border-radius: 14px;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.2);
+    z-index: 1050;
+  }
+}
+
+
+/* Margen lateral para cards en dispositivos medianos y chicos */
+@media (min-width: 900px) and (max-width:1555px) {
+  .toggle-filtros-btn {
+    position: fixed;
+    top: 120px;
+    left: 24px;
+    right: auto;
+    transform: none;
+
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #FEC74A;
+    border: none;
+    font-weight: 600;
+    color: #000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    z-index: 2000;
+  }
+
+  .container-filtro-float {
+    position: fixed;
+    top: 172px;                /* debajo del botón */
+    left: 24px;
+    right: auto;
+    transform: none;
+
+    width: min(420px, 85vw);   /* un poco más ancho en tablet */
+    max-height: 78vh;
+    overflow-y: auto;
+
+    background-color: #ffffff !important;
+    padding: 1.2rem 1.4rem;
+    border-radius: 14px;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.2);
+    z-index: 1050;
+  }
+}
+
+/* ==========================================================
+   Restaurar márgenes laterales de las cards en pantallas chicas
+========================================================== */
+/* MÓVIL MUY CHICO: menos margen */
+@media (max-width: 575.98px) {
+  #productos-nacionales,
+  #productos-internacionales,
+  #productos-petfriendly {
+    padding-left: 3.5rem !important;
+    padding-right: 3.5rem !important;
+  }
+}
+
+/* DE 576px A 991px: un poco más de margen */
+@media (min-width: 576px) and (max-width: 991.98px) {
+  #productos-nacionales,
+  #productos-internacionales,
+  #productos-petfriendly {
+    padding-left: 3.5rem !important;
+    padding-right: 3.5rem !important;
+  }
+}
+

@@ -1,0 +1,270 @@
+/* ===========================
+   VARIABLES GLOBALES DEL TEMA
+=========================== */
+html {
+  --fontTitle: "Montserrat", sans-serif;
+  --fontText: "Nunito Sans", sans-serif;
+  --bgColor: #fff4f2;
+  --primaryColor: #ffd275;
+  --secondaryColor: #5dc1b9;
+  --bottonColor: #ff8360;
+}
+
+/* ===========================
+   LOGO FUNONTRIP
+=========================== */
+.brand-logo {
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-family: var(--fontTitle);
+  color: #000 !important;
+}
+
+.brand-logo:hover {
+  color: var(--secondaryColor) !important;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+/* ===========================
+   ENLACES
+=========================== */
+a {
+  color: #000 !important;
+  text-decoration: none !important;
+  font-family: var(--fontTitle);
+}
+
+a:hover {
+  color: var(--secondaryColor) !important;
+}
+
+/* ===========================
+   NAVBAR — enlaces principales
+=========================== */
+
+.navbar-nav .nav-link {
+  font-size: 1.3rem;
+  font-weight: 600;
+  padding: 0.45rem 0.9rem;
+  font-family: var(--fontTitle);
+  color: #000 !important;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--secondaryColor) !important;
+  transition: 0.2s ease-in-out;
+}
+
+.navbar-nav .nav-item {
+  margin: 0 4px;
+}
+
+/* ===========================
+   HEADER DINÁMICO
+=========================== */
+.header-dinamico {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #ffffff;
+  transition: transform 0.3s ease;
+}
+
+/* se oculta al bajar */
+.header-dinamico.header-hidden {
+  transform: translateY(-100%);
+}
+
+/* ===========================
+   ESPACIADO DEL BODY
+=========================== */
+body {
+  padding-top: 80px;
+}
+
+/* ===========================
+   ICONOS DERECHA (desktop)
+=========================== */
+.header-icons i {
+  font-size: 1.4rem;
+}
+
+/* ===========================
+   MOBILE LAYOUT
+   - Fila 1: brand + redes
+   - Fila 2: hamburguesa + carrito + perfil
+=========================== */
+
+.social-icons-mobile i {
+  font-size: 1.4rem;
+}
+
+.header-actions-mobile i {
+  font-size: 1.4rem;
+}
+
+@media (max-width: 480px) {
+  .peach-topbar {
+    font-size: 0.9rem;
+  }
+}
+
+/* ===========================
+   HEADER FIJO Y DINÁMICO
+   (envuelve topbar + navbar)
+=========================== */
+.header-dinamico {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2000;
+  background-color: transparent;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Cuando se oculta al hacer scroll hacia abajo */
+.header-dinamico.header-hidden {
+  transform: translateY(-100%);
+}
+
+/* ===========================
+   LÍNEA SEPARADORA 
+=========================== */
+.header-separador {
+  width: 100%;
+  height: 2px;
+  background-color: #5dc1b9;
+  position: sticky;
+  top: 85px;
+  /* ajusta según la altura del header */
+  left: 0;
+  z-index: 9999;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
+}
+
+.menu-icon {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+  padding: 0.35rem;
+}
+
+.menu-icon:focus,
+.menu-icon:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.menu-icon i {
+  font-size: 1.6rem;
+  color: #333;
+}
+
+#userDropdownMobile + .dropdown-menu,
+#userDropdown + .dropdown-menu {
+  position: absolute !important;
+  z-index: 99999 !important;
+}
+
+/* Estilo del menú desplegable móvil */
+@media (max-width: 991.98px) {
+  .navbar {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .navbar .container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .mobile-header-top {
+    margin-top: 0.25rem;
+  }
+
+  .navbar-collapse {
+    width: 100%;
+    background-color: #ffffff;
+    padding-bottom: 0.75rem;
+  }
+
+  .navbar-nav {
+    align-items: flex-start;
+    gap: 0.15rem;
+  }
+
+  .navbar-nav .nav-link {
+    padding-left: 0;
+  }
+}
+
+.header-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #ffd275;
+  color: #333;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+/* ===========================
+   DESKTOP LAYOUT
+=========================== */
+@media (min-width: 992px) {
+  .navbar {
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .desktop-header {
+    display: flex;
+  }
+
+  .navbar-nav {
+    align-items: center;
+  }
+
+  .header-icons {
+    margin-left: 1.5rem;
+  }
+
+  /* ocultar estructuras mobile */
+  .mobile-header-top,
+  .mobile-header-bottom,
+  .navbar-collapse.d-lg-none {
+    display: none !important;
+  }
+}
+
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ff4444;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cart-badge.empty {
+  display: none;
+}

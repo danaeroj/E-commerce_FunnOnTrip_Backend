@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Header</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./pages/otrocss/style.css" />
+    <link rel="stylesheet" href="./pages/otrocss/header.css" />
+    <link rel="stylesheet" href="./pages/otrocss/carrito.css" />
+  </head>
+
+  <body>
+    <section class="header-dinamico header-with-horizontal-navheader">
+      <div
+        class="text-center py-2"
+        style="background: #ffd275; font-weight: 600"
+      >
+        ¡Explora México y el mundo con FunOnTrip! 🌍
+      </div>
+
+      <nav class="navbar navbar-expand-lg bg-white">
+        <div class="container">
+          <!-- MOBILE TOP -->
+          <div
+            class="w-100 d-flex justify-content-between align-items-center d-lg-none mobile-header-top"
+          >
+            <a class="navbar-brand fw-bold brand-logo m-0" href="./index.html"
+              >FunOnTrip</a
+            >
+
+            <div class="social-icons-mobile d-flex gap-3">
+              <a href="https://www.facebook.com/" target="_blank"
+                ><i class="fab fa-facebook fs-4"></i
+              ></a>
+              <a href="https://www.instagram.com" target="_blank"
+                ><i class="fab fa-instagram fs-4"></i
+              ></a>
+            </div>
+          </div>
+
+          <!-- MOBILE CTA ROW -->
+          <div
+            class="w-100 d-flex justify-content-between align-items-center d-lg-none mobile-header-bottom mt-1"
+          >
+            <button
+              class="menu-icon d-lg-none"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navMenu"
+            >
+              <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="header-actions-mobile d-flex gap-3 align-items-center">
+              <a
+                id="cart-icon-page"
+                href="./carrito.html"
+                class="btn btn-link p-0 border-0 bg-transparent"
+                style="position: relative"
+              >
+                <i class="fa-solid fa-cart-shopping fs-4"></i>
+                <span id="cart-badge-mobile" class="cart-badge">0</span>
+              </a>
+
+              <div class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle user-icon p-0 d-flex align-items-center justify-content-center"
+                  href="#"
+                  id="userDropdownMobile"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                >
+                  <span class="header-avatar">
+                    <i class="fa-solid fa-user fs-4"></i>
+                  </span>
+                </a>
+                <ul
+                  class="dropdown-menu dropdown-menu-end"
+                  aria-labelledby="userDropdownMobile"
+                >
+                  <li>
+                    <a class="dropdown-item" href="./login.html"
+                      ><i class="fa-solid fa-right-to-bracket me-2"></i> Iniciar
+                      sesión</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="./perfil.html"
+                      ><i class="fa-solid fa-id-card me-2"></i> Mi perfil</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- DESKTOP HEADER -->
+          <div class="d-none d-lg-flex align-items-center w-100 desktop-header">
+            <a class="navbar-brand fw-bold brand-logo me-3" href="./index.html"
+              >FunOnTrip</a
+            >
+
+            <div class="collapse navbar-collapse show" id="navMenuDesktop">
+              <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link" href="./index.html">Inicio</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="./productos.html"
+                    id="productosDropdownDesktop"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                  >
+                    Destinos
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a class="dropdown-item" href="./productos.html#productos"
+                        >Todos</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="./productos.html#nacional"
+                        >Nacional</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="./productos.html#internacional"
+                        >Internacional</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="./productos.html#pet-friendly"
+                        >Pet friendly</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="./about.html"
+                    id="nosotrosDropdownDesktop"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                  >
+                    Nosotros
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a class="dropdown-item" href="./about.html#site-agencia"
+                        >Quiénes Somos</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="./about.html#site-valores"
+                        >Valores</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="./about.html#site-teamCards"
+                        >Equipo</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="./contacto.html">Contacto</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="header-icons d-flex gap-3 align-items-center ms-3">
+              <a href="./carrito.html" style="position: relative">
+                <i class="fa-solid fa-cart-shopping fs-4"></i>
+                <span id="cart-badge-desktop" class="cart-badge">0</span>
+              </a>
+
+              <div class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle user-icon p-0 d-flex align-items-center justify-content-center"
+                  href="#"
+                  id="userDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                >
+                  <span class="header-avatar">
+                    <i class="fa-solid fa-user fs-4"></i>
+                  </span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <a class="dropdown-item" href="./login.html"
+                      ><i class="fa-solid fa-right-to-bracket me-2"></i> Iniciar
+                      sesión</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="./perfil.html"
+                      ><i class="fa-solid fa-id-card me-2"></i> Mi perfil</a
+                    >
+                  </li>
+                </ul>
+              </div>
+
+              <a href="https://www.facebook.com/" target="_blank"
+                ><i class="fab fa-facebook fs-4"></i
+              ></a>
+              <a href="https://www.instagram.com" target="_blank"
+                ><i class="fab fa-instagram fs-4"></i
+              ></a>
+            </div>
+          </div>
+
+          <!-- MOBILE MENU -->
+          <div class="collapse navbar-collapse d-lg-none" id="navMenu">
+            <ul class="navbar-nav mt-3">
+              <li class="nav-item">
+                <a class="nav-link" href="./index.html">Inicio</a>
+              </li>
+
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="./productos.html"
+                  id="productosDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                >
+                  Productos
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="./productos.html#productos"
+                      >Todos</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="./productos.html#nacional"
+                      >Nacional</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="./productos.html#internacional"
+                      >Internacional</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="./productos.html#pet-friendly"
+                      >Pet friendly</a
+                    >
+                  </li>
+                </ul>
+              </li>
+
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="./about.html"
+                  id="nosotrosDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                >
+                  Nosotros
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="./about.html#site-agencia"
+                      >Quiénes Somos</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="./about.html#site-valores"
+                      >Valores</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="./about.html#site-teamCards"
+                      >Equipo</a
+                    >
+                  </li>
+                </ul>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="./contacto.html">Contacto</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div class="header-separador"></div>
+    </section>
+  </body>
+</html>

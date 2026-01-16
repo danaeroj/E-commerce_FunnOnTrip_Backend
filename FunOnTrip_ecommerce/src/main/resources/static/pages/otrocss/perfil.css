@@ -1,0 +1,142 @@
+body {
+  background-color: #f7f7f7;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    padding-top: 80px;
+}
+
+
+/* Hacemos el container un poco más ancho para que no se vea "mini" */
+.perfil-wrapper {
+  max-width: 1200px;   /* antes 1100 */
+}
+
+/* CARD GENERAL */
+.card-perfil {
+  border-radius: 20px;
+  border: none;
+  background: #ffffff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+/* AVATAR */
+.avatar-circle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #ffe29b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #333;
+}
+
+/* PASTILLA DE ESTADO (viajes / reservas) */
+.pill-stat {
+  background-color: #fff7da;
+  border-radius: 50px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* TABLA COMPRAS */
+.table-compras thead {
+  background-color: #ffe29b; /* Dorado */
+  color: #5a4a00;
+  font-weight: 600;
+  border-bottom: 2px solid #d4b464;
+}
+
+/* ESTADOS RESERVA */
+.badge-completado {
+  background-color: #bbf1ae !important;
+  color: #36853c !important;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+.badge-pendiente {
+  background-color: #ffe0c2 !important;
+  color: #ca5a1d !important;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+/* PREFERENCIAS como chips dorados */
+.card-perfil .badge.pref {
+  background-color: #ffe29b !important;  /* amarillo FunOnTrip */
+  color: #4a3d00 !important;             /* cafecito */
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border: 1px solid #e9c067;
+
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: auto !important;
+  min-width: 0 !important;
+  margin-right: 6px;
+  margin-bottom: 6px;
+}
+
+/* Forzar que las cards del perfil usen TODO el ancho de su columna */
+/* Solo la card de "Compras realizadas" (col-lg-8) */
+.perfil .col-lg-8 .card-perfil {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Contenedor de preferencias: permite que las etiquetas se acomoden solas */
+.pref-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px; /* Espacio entre chips */
+    justify-content: flex-start; /* o center si lo prefieres en móvil */
+}
+
+/* Badges (chips) */
+.pref-container .pref {
+    white-space: nowrap; /* evita que se parta el texto */
+    justify-content: center;
+}
+
+
+/* ============================
+   MEJORAS RESPONSIVE
+============================ */
+@media (max-width: 992px) {
+  .perfil-wrapper {
+    padding: 0 1rem;
+    max-width: 100%;
+  }
+
+  .avatar-circle {
+    width: 75px;
+    height: 75px;
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .card-perfil {
+    padding: 1.5rem !important;
+  }
+
+  .table-compras {
+    font-size: 0.9rem;
+  }
+}
+@media (max-width: 768px) {
+    .pref-container {
+        justify-content: center;
+    }
+}
+

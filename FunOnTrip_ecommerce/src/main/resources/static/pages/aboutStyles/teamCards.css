@@ -1,0 +1,250 @@
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(3, 350px);
+  gap: 20px;
+  width: 90%;
+  margin: auto;
+  justify-content: center;
+}
+
+/* --- TARJETA CON FLIP --- */
+.card {
+  width: 340px;
+  height: 600px;
+  perspective: 1000px;
+  margin: auto;
+  border: none;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* --- FRENTE Y REVERSO --- */
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  backface-visibility: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ffffff;
+}
+
+/* --- REVERSO DE LA TARJETA --- */
+.card-back {
+  background-color: #222;
+  color: #fff;
+  transform: rotateY(180deg);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* centra vertical */
+  align-items: center;
+  /* centra horizontal */
+
+  text-align: center;
+  padding: 30px 25px !important;
+  height: 100%;
+}
+
+
+.card-back h3 {
+  font-size: 1.8rem;
+  /* título más grande */
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: #ffffffd9;
+}
+
+.card-back p {
+  font-size: 1.15rem;
+  /* texto más grande */
+  line-height: 1.6;
+  margin-bottom: 35px;
+  color: #ffffffeb;
+  max-width: 90%;
+}
+
+
+/* --- ESTILO ORIGINAL DEL FRENTE DE LA TARJETA --- */
+
+.card__name {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.card__role {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+/* Estilo original del botón "ver más" */
+.card__button-flip {
+  padding: 8px 20px;
+  background-color: rgb(255, 174, 0);
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: auto;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+
+
+.card__link {
+  display: inline-block;
+  margin: 6px 0 12px;
+  font-size: 14px;
+  text-decoration: none;
+  color: #0a66c2 !important;
+  font-weight: 600;
+  transition: all 0.3s ease;
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+.card {
+  perspective: 1000px;
+}
+
+.card-inner {
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* --- Fotos más amplias y que NO corten la cabeza --- */
+.card-front img {
+  width: 250px;
+  height: 350px;
+  object-fit: cover;
+
+  /* mueve el encuadre hacia abajo, evitando cortar cabeza */
+  object-position: top center;
+
+  border-radius: 16px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.15);
+  margin-bottom: 15px;
+  transition: transform 0.25s ease;
+}
+
+/* efecto hover */
+.card-front img:hover {
+  transform: scale(1.05);
+}
+
+
+
+
+/* --- RESPONSIVE MANTENER TU MISMO SISTEMA --- */
+@media (max-width: 1260px) {
+  .cards-container {
+    grid-template-columns: repeat(2, 350px);
+  }
+}
+
+@media (max-width: 800px) {
+  .cards-container {
+    grid-template-columns: 350px;
+  }
+}
+
+
+@media (max-width: 420px) {
+
+  .card {
+    width: 280px;
+    height: 450px;
+  }
+
+  /* Imagen FRONT (solo una versión) */
+  .card-front img {
+    width: 180px;
+    height: 240px;
+    object-position: top center;
+  }
+}
+
+/* --- REVERSO DE LA TARJETA (ajuste de espacio) --- */
+
+.card-back {
+  background-color: #222;
+  color: #fff;
+  transform: rotateY(180deg);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;  /* antes: center */
+  align-items: center;
+
+  text-align: center;
+  padding: 24px 20px;
+  height: 100%;
+  box-sizing: border-box;
+}
+ 
+.card-back h3 {
+  font-size: 1.4rem;
+  font-weight: 400;
+  margin-bottom: 16px;
+  color: #ffffffd9;
+}
+
+.card-back p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 35px;
+  color: #ffffffeb;
+  max-width: 90%;
+}
+
+
+  /* --- BOTÓN "VER MÁS" --- */
+  #verMasBtn {
+    margin: 20px auto;
+
+    padding: 10px 20px;
+    border: none;
+    background: black;
+    color: white;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 50px;
+
+    &:active {
+      transform: scale(0.9);
+    }
+  }

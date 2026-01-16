@@ -1,0 +1,72 @@
+/* Ajuste para que el scroll respete el fixed-header */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px; /* ajusta según la altura real de tu navbar */
+  
+}
+
+section,
+[id] {
+  scroll-margin-top: 100px;
+}
+/* Que la página ocupe toda la altura de la ventana */
+html, body {
+  height: 100%;
+}
+
+/* BODY como contenedor flex vertical */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* al menos el alto de la ventana */
+  background-color:  #fffdf7;
+
+}
+
+/* El MAIN se estira y empuja al footer hacia abajo */
+main {
+  flex: 1 0 auto;
+padding-top: 50px; /* ajústalo según te guste */
+} 
+
+body {
+    
+    padding-top: 80px; 
+}
+
+
+
+/* El footer solo se pinta abajo, no crece */
+.site-footer {
+  flex-shrink: 0;
+}
+
+/* ==== ESTILO GLOBAL PARA TODOS LOS H2 ==== */
+h2 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  text-align: center;
+  color: #1a1a1a; /* Negro fuerte */
+}
+
+h2 span,
+h2 strong {
+  color: #FEC74A; /* Amarillo dorado */
+}
+
+/* ==== ESTILO GLOBAL PARA TODOS LOS H3 ==== */
+h3 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  text-align: center;
+  color: #1a1a1a; /* Negro fuerte */
+}
+
+#navMenu,
+#navMenu .dropdown-menu {
+  position: relative;
+  z-index: 99999 !important;
+}
+.header-separador {
+  z-index: 10; /* antes 999 */
+}
