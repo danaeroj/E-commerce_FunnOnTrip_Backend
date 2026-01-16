@@ -30,7 +30,7 @@ public class DetalleCarritoController {
 	 * Obtener todos los items de un carrito
 	 */
 	@GetMapping("/carrito/{carritoId}")
-	public List<DetalleCarrito> getDetallesByCarrito(@PathVariable ("id") Integer carritoId) {
+	public List<DetalleCarrito> getDetallesByCarrito(@PathVariable("carritoId") Integer carritoId) {
 		return detalleService.getDetallesByCarrito(carritoId);
 	}
 
@@ -54,6 +54,18 @@ public class DetalleCarritoController {
 			@RequestParam Integer cantidad) {
 		return detalleService.addProducto(carritoId, productoId, cantidad);
 	}
+	@PostMapping("/test")
+	public String testSimple(
+	        @RequestParam Integer carritoId,
+	        @RequestParam Long productoId,
+	        @RequestParam Integer cantidad) {
+	    
+	    return "OK - Parámetros recibidos: " + 
+	           "carritoId=" + carritoId + ", " +
+	           "productoId=" + productoId + ", " +
+	           "cantidad=" + cantidad;
+	}
+	
 
 	/**
 	 * PUT /api/detalles-carrito/{id}?cantidad=5
@@ -74,5 +86,6 @@ public class DetalleCarritoController {
 	public void deleteDetalle(@PathVariable ("id") Integer id) {
 		detalleService.deleteDetalle(id);
 	}
+	
 }
 

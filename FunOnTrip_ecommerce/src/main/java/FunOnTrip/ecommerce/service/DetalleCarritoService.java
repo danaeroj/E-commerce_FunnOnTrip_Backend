@@ -55,6 +55,8 @@ public class DetalleCarritoService {
 		Producto producto = productoRepository.findById(productoId)
 				.orElseThrow(() -> new IllegalArgumentException("Producto con id [" + productoId + "] no existe"));
 
+		
+		
 		// Verificar si el producto ya existe en el carrito
 		return detalleRepository.findByCarritoIdCarritoAndProductoIdProducto(carritoId, productoId)
 				.map(detalle -> {

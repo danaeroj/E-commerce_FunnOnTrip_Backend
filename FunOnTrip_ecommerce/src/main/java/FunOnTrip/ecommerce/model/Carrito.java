@@ -14,16 +14,35 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
+
 @Table(name = "Carrito")
+@NamedEntityGraph(
+	    name = "Carrito.conDetallesYProductos",
+	    attributeNodes = {
+	        @NamedAttributeNode("detalles"),
+	        @NamedAttributeNode(value = "detalles", subgraph = "detalles.producto")
+	    },
+	    subgraphs = {
+	        @NamedSubgraph(
+	            name = "detalles.producto",
+	            attributeNodes = @NamedAttributeNode("producto")
+	        )
+	    }
+	)
+
+
 public class Carrito {
 
-    // 🔥 ENUM DENTRO DE LA CLASE
+    //  ENUM DENTRO DE LA CLASE
     public enum EstadoCarrito {
         ACTIVO,       // EN MAYÚSCULAS
         PENDIENTE,    // EN MAYÚSCULAS  
