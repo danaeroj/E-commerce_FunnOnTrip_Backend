@@ -40,9 +40,9 @@ public class SecurityConfig {
                     // crear usuario público (opcional)
                     .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
 
-                    .requestMatchers("/api/carritos/**").permitAll()
+                    //.requestMatchers("/api/carritos/**").permitAll()
                     
-                    .requestMatchers("/api/carritos/**/**").permitAll()
+                    //.requestMatchers("/api/carritos/**/**").permitAll()
                     
                     // contacto: crear público (form)
                     .requestMatchers(HttpMethod.POST, "/api/contacto").permitAll()
