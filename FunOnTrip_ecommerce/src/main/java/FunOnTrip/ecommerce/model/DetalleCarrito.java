@@ -14,6 +14,8 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "Detalle_carrito")
 public class DetalleCarrito {
@@ -32,9 +34,11 @@ public class DetalleCarrito {
 	@Column(name = "fecha_agregado", nullable = false, updatable = false)
 	private LocalDateTime fechaAgregado;
 
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "Carrito_idCarrito", nullable = false)
 	private Carrito carrito;
+
 
 	@ManyToOne
 	@JoinColumn(name = "Producto_idProducto", nullable = false)

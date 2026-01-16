@@ -34,6 +34,18 @@ public class SecurityConfig {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
 
+                  			    // deja login/register según tu proyecto
+                   .requestMatchers("/api/auth/**").permitAll()
+
+                    // permitir leer carritos (si lo quieres así)
+                   .requestMatchers(HttpMethod.GET, "/api/carritos/**").authenticated()
+
+                    // permitir agregar detalle al carrito (POST)
+                    .requestMatchers(HttpMethod.POST, "/api/detalles-carrito/**").hasRole("ADMIN")
+                   // o si también lo pueden hacer USER:
+                   // .requestMatchers(HttpMethod.POST, "/api/detalles-carrito/**").authenticated()
+
+
                     // auth público
                     .requestMatchers("/api/auth/**").permitAll()
 
@@ -42,7 +54,7 @@ public class SecurityConfig {
 
                     .requestMatchers("/api/carritos/**").permitAll()
                     
-                    .requestMatchers("/api/carritos/**/**").permitAll()
+                    .requestMatchers("/api/carritos/**").permitAll()
                     
                     // contacto: crear público (form)
                     .requestMatchers(HttpMethod.POST, "/api/contacto").permitAll()

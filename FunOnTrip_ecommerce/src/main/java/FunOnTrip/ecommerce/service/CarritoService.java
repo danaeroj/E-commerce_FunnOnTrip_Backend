@@ -21,20 +21,23 @@ public class CarritoService {
     }
 
     public List<Carrito> obtenerTodos() {
-        return carritoRepository.findAll();
+        return carritoRepository.findAllWithDetalles();
     }
 
     // Método que SI carga los detalles - usa el método con @EntityGraph
     public Carrito obtenerPorIdConDetalles(Integer id) {
-        return carritoRepository.findById(id)  // ¡Este ahora tiene @EntityGraph!
+        return carritoRepository.findByIdWithDetalles(id)
                 .orElseThrow(() -> new IllegalArgumentException("Carrito con id [" + id + "] no encontrado"));
     }
+    
 
     // Método normal (puedes usar este o el de arriba, ambos cargan detalles)
     public Carrito obtenerPorId(Integer id) {
         return obtenerPorIdConDetalles(id);  // Llama al mismo método
     }
-
+    
+  
+    
     @Transactional
     public Carrito getOrCreateCarritoActivo(Long usuarioId) {
         // Usa el método con @EntityGraph

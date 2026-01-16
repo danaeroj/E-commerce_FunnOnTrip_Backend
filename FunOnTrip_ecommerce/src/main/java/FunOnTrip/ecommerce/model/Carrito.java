@@ -22,6 +22,9 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+
 @Entity
 
 @Table(name = "Carrito")
@@ -80,8 +83,10 @@ public class Carrito {
     @JoinColumn(name = "Usuarios_idUsuarios")
     private Usuario usuario;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetalleCarrito> detalles = new ArrayList<>();
+
 
     // Constructores
     public Carrito() {

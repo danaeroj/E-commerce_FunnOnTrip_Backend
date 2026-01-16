@@ -3,10 +3,12 @@ package FunOnTrip.ecommerce.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Usuarios")
 public class Usuario {
-
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idUsuarios")
@@ -18,6 +20,7 @@ public class Usuario {
     @Column(name = "correo_electronico", nullable = false, unique = true, length = 100)
     private String correoElectronico;
 
+    @JsonIgnore
     @Column(name = "contraseña", nullable = false, length = 255)
     private String password;
 

@@ -49,33 +49,32 @@ public class DetalleCarritoController {
 	 */
 	@PostMapping
 	public DetalleCarrito addProducto(
-			@RequestParam Integer carritoId,
-			@RequestParam Long productoId,
-			@RequestParam Integer cantidad) {
-		return detalleService.addProducto(carritoId, productoId, cantidad);
+	        @RequestParam("carritoId") Integer carritoId,
+	        @RequestParam("productoId") Long productoId,
+	        @RequestParam("cantidad") Integer cantidad) {
+	    return detalleService.addProducto(carritoId, productoId, cantidad);
 	}
-	@PostMapping("/test")
-	public String testSimple(
-	        @RequestParam Integer carritoId,
-	        @RequestParam Long productoId,
-	        @RequestParam Integer cantidad) {
-	    
-	    return "OK - Parámetros recibidos: " + 
-	           "carritoId=" + carritoId + ", " +
-	           "productoId=" + productoId + ", " +
-	           "cantidad=" + cantidad;
-	}
+
 	
 
+	@PostMapping("/test")
+	public String testSimple(
+	        @RequestParam("carritoId") Integer carritoId,
+	        @RequestParam("productoId") Long productoId,
+	        @RequestParam("cantidad") Integer cantidad) {
+	    return "OK ...";
+	}
+
+	
 	/**
 	 * PUT /api/detalles-carrito/{id}?cantidad=5
 	 * Actualizar cantidad de un item
 	 */
 	@PutMapping("/{id}")
 	public DetalleCarrito updateCantidad(
-			@PathVariable Integer id,
-			@RequestParam Integer cantidad) {
-		return detalleService.updateCantidad(id, cantidad);
+	        @PathVariable("id") Integer id,
+	        @RequestParam("cantidad") Integer cantidad) {
+	    return detalleService.updateCantidad(id, cantidad);
 	}
 
 	/**
